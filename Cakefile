@@ -19,6 +19,7 @@ sourceFiles = [
 	"Meta"
 	"Classes/Observable"
 	"Classes/PublishSubscribe"
+	"Classes/HTMLElement"
 	"Classes/Task"
 	"Classes/DelayedTask"
 	"Classes/DebouncedTask"
