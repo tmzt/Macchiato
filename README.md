@@ -38,9 +38,8 @@ found in the official project Wiki [here][wiki-guidelines].
 
 ## Comments from the Developer(s) ##
 
-> "Macchiato is anything that I have ever found myself writing over, and over,
-> and over again. The code that gets checked-in here is indispensable to every
-> significant new JavaScript project that I work on." - [sheatrevor][github-sheatrevor]
+> "Macchiato is everything that I have ever found myself writing over, and over,
+> and over again." - [sheatrevor][github-sheatrevor]
 
 If you have any comments that you would like to add, please feel free to do so
 by creating your own paragraph and tagging it at the end with your username and
