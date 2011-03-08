@@ -5,8 +5,10 @@
 # manipulated or queried.
 class HTMLElement extends PublishSubscribe
 
-	# Creates the class variable to store the observers.
+	# Calls the parent constructor.
 	constructor: ->
+		# Invoke the parent constructor
+		super()
 
 # Expose this class to the parent scope
 Meta.expose "HTMLElement", HTMLElement
