@@ -27,6 +27,7 @@ sourceFiles = [
 	"Classes/Assertion"
 	"Classes/AssertionSuccess"
 	"Classes/AssertionFailure"
+	"Classes/Synchronizable"
 	"Classes/Test"
 	"Classes/Tests"
 ]
