@@ -19,6 +19,7 @@ sourceFiles = [
 	"Meta"
 	"Classes/Observable"
 	"Classes/PublishSubscribe"
+	"Classes/Log"
 	"Classes/Task"
 	"Classes/DelayedTask"
 	"Classes/DebouncedTask"
