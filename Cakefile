@@ -20,6 +20,7 @@ sourceFiles = [
 	"Classes/Observable"
 	"Classes/PublishSubscribe"
 	"Classes/Log"
+	"Classes/HTMLElement"
 	"Classes/Task"
 	"Classes/DelayedTask"
 	"Classes/DebouncedTask"
@@ -27,6 +28,7 @@ sourceFiles = [
 	"Classes/Assertion"
 	"Classes/AssertionSuccess"
 	"Classes/AssertionFailure"
+	"Classes/Synchronizable"
 	"Classes/Test"
 	"Classes/Tests"
 ]
