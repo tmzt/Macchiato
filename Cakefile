@@ -6,32 +6,38 @@ fs = require "fs"
 echo = console.log
 exit = process.exit
 
-# Define the different packages in this library
+# Define the different packages and their dependencies
 files =
-	"Core": [
-		"Meta.coffee"
-		"Observable.coffee"
-		"Publish/Subscribe.coffee"
-		"Log.coffee"
-		"HTML/Element.coffee"
-		"Task.coffee"
-		"Delayed/Task.coffee"
-		"Debounced/Task.coffee"
-		"Tasks.coffee"
-		"Assertion.coffee"
-		"Assertion/Success.coffee"
-		"Assertion/Failure.coffee"
-		"Synchronizable.coffee"
-		"Test.coffee"
-		"Tests.coffee"
-	]
+	"Core":
+		"files": [
+			"Meta.coffee"
+			"Observable.coffee"
+			"Publish/Subscribe.coffee"
+			"Log.coffee"
+			"HTML/Element.coffee"
+			"Task.coffee"
+			"Delayed/Task.coffee"
+			"Debounced/Task.coffee"
+			"Tasks.coffee"
+			"Assertion.coffee"
+			"Assertion/Success.coffee"
+			"Assertion/Failure.coffee"
+			"Synchronizable.coffee"
+			"Test.coffee"
+			"Tests.coffee"
+		]
 
-# Define the different packages that make up the unit tests
+# Define the different packages that make up the unit tests and their
+# dependencies
 tests =
-	"Core": [
-		"Test/Observable.coffee"
-		"Test/Publish/Subscribe.coffee"
-	]
+	"Core":
+		"dependencies": [
+			"Core"
+		]
+		"files": [
+			"Test/Observable.coffee"
+			"Test/Publish/Subscribe.coffee"
+		]
 
 # Trims any whitespace off of the ends of the passed string value
 trim = (value) ->
@@ -39,34 +45,14 @@ trim = (value) ->
 	value.replace /^\s+|\s+$/g, ""
 
 # Returns the contents of the specified filename
-read = (filename, callback) ->
-	# Read the file and run the callback
-	fs.readFile filename, "ascii", callback
+read = (filename) ->
+	# Read the file and return its contents
+	fs.readFileSync filename, "ascii"
 
-# Grab the name, version, and taglines for the library
-libraryName = trim read "NAME"
-libraryVersion = trim read "VERSION"
-libraryTagline = trim read "TAGLINE"
-
-# Define a place for the source file data to go
-sourceFileData = []
-
-# Define the filename for the concatenated CoffeeScript source code
-concatenatedSourceFilename = "#{libraryName}.coffee"
-
-# Define the filename for the finished JavaScript file
-outputFilename = "#{libraryName}.js"
-
-# Reads a file from the specified filename, pushing into the source file data
-# array
-loadSourceFile = (filename) ->
-	# Read the source file contents into the source file data array
-	sourceFileData.push read "CoffeeScript/#{filename}.coffee"
-
-# Writes a single file containing the joined data in the source file data array
-writeConcatenatedSourceFile = ->
-	# Write a single CoffeeScript file in the same directory as this Cakefile
-	fs.writeFileSync concatenatedSourceFilename, sourceFileData.join "\n\n"
+# Writes the passed data to the specified filename
+write = (filename, data) ->
+	# Write the contents of data to the specified filename
+	fs.writeFileSync filename, data, "ascii"
 
 # Helper function to standardize the way we handle unexpected errors
 handleError = (err) ->
@@ -79,62 +65,23 @@ handleError = (err) ->
 	# Otherwise we just throw
 	throw err
 
-# Start building the string that shows up as the first line of output
-nameAndVersion = trim "#{libraryName} #{libraryVersion}"
+# Grab the library name, version, and tagline
+libraryName = trim read "NAME"
+libraryVersion = trim read "VERSION"
+libraryTagline = trim read "TAGLINE"
 
-# Show some information about this library on screen
-echo "#{nameAndVersion} - #{libraryTagline}"
+# Display the name, version, and tagline on screen
+echo "#{libraryName} #{libraryVersion} - #{libraryTagline}"
 
 # Define the main build task
 task "build", "Build the complete #{libraryName} library", ->
-	# Echo the fact that we are doing something
-	echo "Building the complete #{libraryName} library..."
-	# Loop over each of the files in the source file array
-	loadSourceFile filename for filename in sourceFiles
-	# Compile all of the data in all of the source files into a single
-	# CoffeeScript file
-	writeConcatenatedSourceFile()
-	# Define the shell command to compile the concatenated CoffeeScript file
-	# into a single JavaScript file
-	compileCommand = "cat #{concatenatedSourceFilename} | " +
-		"coffee -sc > JavaScript/#{outputFilename}"
-	# Run the compile command string
-	exec compileCommand, (err, stdout, stderr) ->
-		# If we have an error throw it
-		handleError err if err
-		# Delete the Macchiato.coffee file
-		fs.unlink concatenatedSourceFilename, (err) ->
-			# Echo the fact that we are done now
-			echo "Done."
-			# Run the unit tests if we should
-			if runTests
-				# Echo the fact that we are going to run all of the unit tests
-				echo "Running tests..."
-				# Define the shell command to execute the unit tests
-				testCommand = "node JavaScript/#{outputFilename}"
-				# Execute the tests
-				exec testCommand, (err, stdout, stderr) ->
-					# If we have an error, throw it
-					handleError if err
-					# Forward all of the output
-					echo stdout
-					# Echo the fact that we are done now
-					echo "Done."
+
+# Define the main build task
+task "build-core", "Build only the core components", ->
 
 # Define the task that runs all of the unit tests
-task "test", "Run all of the unit tests", ->
-	# Add the unit tests source files array
-	sourceFiles = sourceFiles.concat unitTestSourceFiles
-	# Set the flag that tells the build task to run all of the unit tests
-	runTests = yes
-	# Build the project
-	invoke "build"
+task "test", "Runs all of the unit tests", ->
 
 # Define the task that resets everything
 task "clean", "Removes everything that build creates", ->
-	# State that we are doing something
-	echo "Cleaning everything up..."
-	# Delete the Macchiato.js file
-	fs.unlink "JavaScript/#{outputFilename}", (err) ->
-		# Echo the fact that we are done now
-		echo "Done."
+	
