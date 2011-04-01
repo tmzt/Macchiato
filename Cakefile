@@ -11,26 +11,25 @@ trim = (value) ->
 	# Return the trimmed value of the string
 	value.replace /^\s+|\s+$/g, ""
 
-# Define
-
-# Define the list of files that make up the Core
-coreFiles = [
-	"Meta"
-	"Classes/Observable"
-	"Classes/PublishSubscribe"
-	"Classes/Log"
-	"Classes/HTMLElement"
-	"Classes/Task"
-	"Classes/DelayedTask"
-	"Classes/DebouncedTask"
-	"Classes/Tasks"
-	"Classes/Assertion"
-	"Classes/AssertionSuccess"
-	"Classes/AssertionFailure"
-	"Classes/Synchronizable"
-	"Classes/Test"
-	"Classes/Tests"
-]
+# Define the different packages in this library
+files =
+	"Core": [
+		"Meta.coffee"
+		"Observable.coffee"
+		"Publish/Subscribe.coffee"
+		"Log.coffee"
+		"HTML/Element.coffee"
+		"Task.coffee"
+		"Delayed/Task.coffee"
+		"Debounced/Task.coffee"
+		"Tasks.coffee"
+		"Assertion.coffee"
+		"Assertion/Success.coffee"
+		"Assertion/Failure.coffee"
+		"Synchronizable.coffee"
+		"Test.coffee"
+		"Tests.coffee"
+	]
 
 # Define the list of files that make up the Client library
 
