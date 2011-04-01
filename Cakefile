@@ -6,11 +6,6 @@ fs = require "fs"
 echo = console.log
 exit = process.exit
 
-# Trims any whitespace off of the ends of the passed string value
-trim = (value) ->
-	# Return the trimmed value of the string
-	value.replace /^\s+|\s+$/g, ""
-
 # Define the different packages in this library
 files =
 	"Core": [
@@ -31,8 +26,6 @@ files =
 		"Tests.coffee"
 	]
 
-# Define the list of files that make up the Client library
-
 # Define the different packages that make up the unit tests
 tests =
 	"Core": [
@@ -40,10 +33,15 @@ tests =
 		"Test/Publish/Subscribe.coffee"
 	]
 
+# Trims any whitespace off of the ends of the passed string value
+trim = (value) ->
+	# Return the trimmed value of the string
+	value.replace /^\s+|\s+$/g, ""
+
 # Returns the contents of the specified filename
-read = (filename) ->
-	# Read the file and return it
-	fs.readFileSync filename, "ascii"
+read = (filename, callback) ->
+	# Read the file and run the callback
+	fs.readFile filename, "ascii", callback
 
 # Grab the name, version, and taglines for the library
 libraryName = trim read "NAME"
