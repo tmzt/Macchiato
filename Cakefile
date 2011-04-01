@@ -2,20 +2,19 @@
 fs = require "fs"
 {exec} = require "child_process"
 
-# Shortcuts to common functions and variables
+# Shortcuts to common node.js functions
 echo = console.log
 exit = process.exit
 
-# Global variable that tells us if we should run the unit tests or not
-runTests = no
-
-# String utilities
+# Trims any whitespace off of the ends of the passed string value
 trim = (value) ->
 	# Return the trimmed value of the string
 	value.replace /^\s+|\s+$/g, ""
 
+# Define
+
 # Define the list of files that make up the Core
-sourceFiles = [
+coreFiles = [
 	"Meta"
 	"Classes/Observable"
 	"Classes/PublishSubscribe"
@@ -33,8 +32,10 @@ sourceFiles = [
 	"Classes/Tests"
 ]
 
+# Define the list of files that make up the Client library
+
 # Define the list of files that make up the Unit Tests
-unitTestSourceFiles = [
+coreUnitTestFiles = [
 	"Tests/TestObservable"
 	"Tests/TestPublishSubscribe"
 ]
