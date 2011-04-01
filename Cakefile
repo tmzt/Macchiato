@@ -33,11 +33,12 @@ files =
 
 # Define the list of files that make up the Client library
 
-# Define the list of files that make up the Unit Tests
-coreUnitTestFiles = [
-	"Tests/TestObservable"
-	"Tests/TestPublishSubscribe"
-]
+# Define the different packages that make up the unit tests
+tests =
+	"Core": [
+		"Test/Observable.coffee"
+		"Test/Publish/Subscribe.coffee"
+	]
 
 # Returns the contents of the specified filename
 read = (filename) ->
