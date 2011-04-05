@@ -8,9 +8,16 @@ exit = process.exit
 
 # Define the different packages and their dependencies
 files =
+	"All":
+		"command": "build"
+		"description": "Builds the complete library, excluding unit tests."
+		"dependencies": ["Core"]
+	"All-Minimized":
+		"command": "build-minimized"
+		"description": "Does the same thing as build, then minimizes the finished library file."
 	"Core":
 		"command": "build-core"
-		"description": "Builds only the core components of the library"
+		"description": "Builds only the core components of the library."
 		"files": [
 			"Meta.coffee"
 			"Observable.coffee"
@@ -37,16 +44,12 @@ files =
 	"Tests":
 		"run": true
 		"command": "test"
-		"description": "Includes and runs all of the unit tests"
+		"description": "Includes and runs all of the unit tests."
 		"dependencies": ["Testing"]
 		"files": [
 			"Core/Observable.coffee"
 			"Core/Publish/Subscribe.coffee"
 		]
-	"All":
-		"command": "build"
-		"description": "Builds the complete library, excluding unit tests"
-		"dependencies": ["Core"]
 
 # Trims any whitespace off of the ends of the passed string value
 trim = (value) ->
