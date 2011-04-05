@@ -36,7 +36,7 @@ files =
 		]
 	"Tests":
 		"run": true
-		"command": "tests"
+		"command": "test"
 		"description": "Includes and runs all of the unit tests"
 		"dependencies": ["Testing"]
 		"files": [
