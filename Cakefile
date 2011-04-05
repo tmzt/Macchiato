@@ -172,3 +172,4 @@ for name, rules of files
 task "clean", "Removes everything that build creates", ->
 	# Erase all JavaScript files in the JavaScript directory
 	erase "JavaScript/#{libraryName}.js"
+	erase "JavaScript/#{libraryName}.min.js"
