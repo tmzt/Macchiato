@@ -13,8 +13,10 @@ files =
 		"description": "Builds the complete library, excluding unit tests."
 		"dependencies": ["Core"]
 	"All-Minimized":
+		"minimize": true
 		"command": "build-minimized"
 		"description": "Does the same thing as build, then minimizes the finished library file."
+		"dependencies": ["All"]
 	"Core":
 		"command": "build-core"
 		"description": "Builds only the core components of the library."
@@ -144,6 +146,14 @@ build = (packageName) ->
 		if package.run? and package.run
 			# Run it under Node.js
 			exec "node JavaScript/#{libraryName}.js", (err, stdout, stderr) ->
+				# Display the output without whitespace
+				echo trim stdout
+		# If we should attempt to minimize the compiled JavaScript file
+		if package.minimize? and package.minimize
+			# Determine the command to minimize the JavaScript file
+			command = "cat JavaScript/#{libraryName}.js | jsmin > JavaScript/#{libraryName}.min.js"
+			# Attempt to use jsmin to minimize the JavaScript
+			exec command, (err, stdout, stderr) ->
 				# Display the output without whitespace
 				echo trim stdout
 
