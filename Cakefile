@@ -21,10 +21,16 @@ files =
 			"Delayed/Task.coffee"
 			"Debounced/Task.coffee"
 			"Tasks.coffee"
+			"Synchronizable.coffee"
+		]
+	"Testing":
+		"private": true
+		"dependencies": ["Core"]
+		"files": [
+			"Meta.coffee"
 			"Assertion.coffee"
 			"Assertion/Success.coffee"
 			"Assertion/Failure.coffee"
-			"Synchronizable.coffee"
 			"Test.coffee"
 			"Tests.coffee"
 		]
@@ -32,9 +38,7 @@ files =
 		"run": true
 		"command": "tests"
 		"description": "Includes and runs all of the unit tests"
-		"dependencies": [
-			"Core"
-		]
+		"dependencies": ["Testing"]
 		"files": [
 			"Core/Observable.coffee"
 			"Core/Publish/Subscribe.coffee"
@@ -42,9 +46,7 @@ files =
 	"All":
 		"command": "build"
 		"description": "Builds the complete library, excluding unit tests"
-		"dependencies": [
-			"Core"
-		]
+		"dependencies": ["Core"]
 
 # Trims any whitespace off of the ends of the passed string value
 trim = (value) ->
@@ -144,6 +146,9 @@ build = (packageName) ->
 
 # Loop over the files object and define the tasks this Cakefile exposes
 for name, rules of files
+	# Move on to the next package definition if this package is supposed to be
+	# private
+	continue if rules.private? and rules.private
 	# Define the task to run these rules
 	task rules.command, rules.description, ((packageName) ->
 		# Return a function that attempts to build this package
