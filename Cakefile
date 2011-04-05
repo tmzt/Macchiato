@@ -29,6 +29,7 @@ files =
 			"Tests.coffee"
 		]
 	"Tests":
+		"run": true
 		"command": "tests"
 		"description": "Includes and runs all of the unit tests"
 		"dependencies": [
@@ -62,8 +63,10 @@ write = (filename, data) ->
 
 # Unlinks the file from the disk
 erase = (filename) ->
-	# Unlink the file
-	fs.unlinkSync filename
+	# We dont care if the unlink works or not
+	try
+		# Unlink the file
+		fs.unlinkSync filename
 
 # Grab the library name, version, and tagline
 libraryName = trim read "NAME"
@@ -110,6 +113,8 @@ getFiles = (packageName) ->
 
 # Builds everything for a specific package
 build = (packageName) ->
+	# Grab a shortcut variable to the current package
+	package = files[packageName]
 	# Grab the file list for this package
 	fileList = getFiles packageName
 	# Create a place to store all of the file data
@@ -125,9 +130,17 @@ build = (packageName) ->
 	# Determine what the CoffeeScript compile command needs to be
 	command = "coffee -pc #{libraryName}.coffee > JavaScript/#{libraryName}.js"
 	# Execute the CoffeeScript compiler on the temporary file
-	exec command, (error, stdout, stderr) ->
+	exec command, (err, stdout, stderr) ->
+		# Handle the error if we have one
+		handleError err if err
 		# Erase the temporary CoffeeScript file
 		erase "#{libraryName}.coffee"
+		# If we should run the compiled JavaScript file
+		if package.run? and package.run
+			# Run it under Node.js
+			exec "node JavaScript/#{libraryName}.js", (err, stdout, stderr) ->
+				# Display the output without whitespace
+				echo trim stdout
 
 # Loop over the files object and define the tasks this Cakefile exposes
 for name, rules of files
@@ -139,4 +152,5 @@ for name, rules of files
 
 # Define the task that resets everything
 task "clean", "Removes everything that build creates", ->
-	
+	# Erase all JavaScript files in the JavaScript directory
+	erase "JavaScript/#{libraryName}.js"
