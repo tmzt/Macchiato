@@ -9,6 +9,8 @@ exit = process.exit
 # Define the different packages and their dependencies
 files =
 	"Core":
+		"command": "build-core"
+		"description": "Builds only the core components of the library"
 		"files": [
 			"Meta.coffee"
 			"Observable.coffee"
@@ -26,17 +28,21 @@ files =
 			"Test.coffee"
 			"Tests.coffee"
 		]
-
-# Define the different packages that make up the unit tests and their
-# dependencies
-tests =
-	"Core":
+	"Tests":
+		"command": "tests"
+		"description": "Includes and runs all of the unit tests"
 		"dependencies": [
 			"Core"
 		]
 		"files": [
-			"Test/Observable.coffee"
-			"Test/Publish/Subscribe.coffee"
+			"Core/Observable.coffee"
+			"Core/Publish/Subscribe.coffee"
+		]
+	"All":
+		"command": "build"
+		"description": "Builds the complete library, excluding unit tests"
+		"dependencies": [
+			"Core"
 		]
 
 # Trims any whitespace off of the ends of the passed string value
@@ -54,6 +60,19 @@ write = (filename, data) ->
 	# Write the contents of data to the specified filename
 	fs.writeFileSync filename, data, "ascii"
 
+# Unlinks the file from the disk
+erase = (filename) ->
+	# Unlink the file
+	fs.unlinkSync filename
+
+# Grab the library name, version, and tagline
+libraryName = trim read "NAME"
+libraryVersion = trim read "VERSION"
+libraryTagline = trim read "TAGLINE"
+
+# Display the name, version, and tagline on screen
+echo "#{libraryName} #{libraryVersion} - #{libraryTagline}"
+
 # Helper function to standardize the way we handle unexpected errors
 handleError = (err) ->
 	# If the error has a message member, we display it
@@ -65,22 +84,58 @@ handleError = (err) ->
 	# Otherwise we just throw
 	throw err
 
-# Grab the library name, version, and tagline
-libraryName = trim read "NAME"
-libraryVersion = trim read "VERSION"
-libraryTagline = trim read "TAGLINE"
+# Generates an array of files to concatenate based on the rules defined in the
+# files object
+getFiles = (packageName) ->
+	# Define the file list array we will be returning back
+	fileList = []
+	# Grab a shortcut variable to the current package
+	package = files[packageName]
+	# If a dependencies array is defined on this package
+	if package.dependencies?
+		# Loop over each of the dependencies
+		for dependency in package.dependencies
+			# Grab the files from the current dependency
+			dependencyFiles = getFiles dependency
+			# Add the files from the other packages to this file list
+			fileList = fileList.concat dependencyFiles
+	# If a files array is defined on this package
+	if package.files?
+		# Loop over the files in this collection
+		for file in package.files
+			# Add this file with the package name as the parent directory
+			fileList.push "#{packageName}/#{file}"
+	# Return the file list
+	return fileList
 
-# Display the name, version, and tagline on screen
-echo "#{libraryName} #{libraryVersion} - #{libraryTagline}"
+# Builds everything for a specific package
+build = (packageName) ->
+	# Grab the file list for this package
+	fileList = getFiles packageName
+	# Create a place to store all of the file data
+	data = []
+	# Loop over each of the files in the file list and push the contents of the
+	# file into the data array
+	data.push read "CoffeeScript/#{file}" for file in fileList
+	# Concatenate all of the file data together with two newlines in between
+	# for readability
+	data = data.join "\n\n"
+	# Write out a temporary CoffeeScript file which contains all of the data
+	write "#{libraryName}.coffee", data
+	# Determine what the CoffeeScript compile command needs to be
+	command = "coffee -pc #{libraryName}.coffee > JavaScript/#{libraryName}.js"
+	# Execute the CoffeeScript compiler on the temporary file
+	exec command, (error, stdout, stderr) ->
+		# Erase the temporary CoffeeScript file
+		erase "#{libraryName}.coffee"
 
-# Define the main build task
-task "build", "Build the complete #{libraryName} library", ->
-
-# Define the main build task
-task "build-core", "Build only the core components", ->
-
-# Define the task that runs all of the unit tests
-task "test", "Runs all of the unit tests", ->
+# Loop over the files object and define the tasks this Cakefile exposes
+for name, rules of files
+	# Define the task to run these rules
+	task rules.command, rules.description, ((packageName) ->
+		# Return a function that attempts to build this package
+		return -> build packageName
+	)(name)
 
 # Define the task that resets everything
 task "clean", "Removes everything that build creates", ->
