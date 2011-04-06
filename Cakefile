@@ -11,7 +11,7 @@ files =
 	"All":
 		"command": "build"
 		"description": "Builds the complete library, excluding unit tests."
-		"dependencies": ["Core"]
+		"dependencies": ["Client", "Server"]
 	"All-Minimized":
 		"minimize": true
 		"command": "build-minimized"
@@ -25,16 +25,26 @@ files =
 			"Observable.coffee"
 			"Publish/Subscribe.coffee"
 			"Log.coffee"
-			"HTML/Element.coffee"
 			"Task.coffee"
 			"Delayed/Task.coffee"
 			"Debounced/Task.coffee"
 			"Tasks.coffee"
 			"Synchronizable.coffee"
 		]
+	"Client":
+		"command": "build-client"
+		"description": "Includes code relevant to client-side development."
+		"dependencies": ["Core"]
+		"files": [
+			"HTML/Element.coffee"
+		]
+	"Server":
+		"command": "build-server"
+		"description": "Includes code relevant to server-side development."
+		"dependencies": ["Core"]
 	"Testing":
 		"private": true
-		"dependencies": ["Core"]
+		"dependencies": ["Client", "Server"]
 		"files": [
 			"Meta.coffee"
 			"Assertion.coffee"
@@ -94,11 +104,24 @@ handleError = (err) ->
 	# Otherwise we just throw
 	throw err
 
+# Helper function that searches the passed array for the passed value
+inArray = (haystack, needle) ->
+	# Search the passed haystack for needle
+	for value in haystack
+		# If we found the needle in the haystack
+		return true if value is needle
+	# If we made it down here, we found nothing
+	return false
+
 # Generates an array of files to concatenate based on the rules defined in the
 # files object
-getFiles = (packageName) ->
+getFiles = (packageName, loadedPackages = []) ->
 	# Define the file list array we will be returning back
 	fileList = []
+	# Return if the package that we were asked to process is already loaded
+	return fileList if inArray loadedPackages, packageName
+	# Add this package to the list of loaded packages
+	loadedPackages.push packageName
 	# Grab a shortcut variable to the current package
 	package = files[packageName]
 	# If a dependencies array is defined on this package
@@ -106,7 +129,7 @@ getFiles = (packageName) ->
 		# Loop over each of the dependencies
 		for dependency in package.dependencies
 			# Grab the files from the current dependency
-			dependencyFiles = getFiles dependency
+			dependencyFiles = getFiles dependency, loadedPackages
 			# Add the files from the other packages to this file list
 			fileList = fileList.concat dependencyFiles
 	# If a files array is defined on this package
