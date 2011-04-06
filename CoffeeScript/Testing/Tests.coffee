@@ -32,6 +32,9 @@ class Tests
 	reset: ->
 		# Initialize the local tests collection to an empty object
 		@tests = {}
+		# Initialize the class vairable that tracks the total number of tests
+		# that we are running
+		@totalTests = 0
 		# Initialize the class variable that tracks the grand total of
 		# successful unit tests
 		@successfulTests = 0
@@ -66,6 +69,8 @@ class Tests
 			# Add this Test class instance to the tests collection on this
 			# class instance
 			@tests[name] = test
+			# Increment the total number of tests
+			@totalTests++
 			# Run the test
 			test.run()
 		# Return a reference to this class instance
