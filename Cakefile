@@ -14,11 +14,11 @@ files =
 		"dependencies": ["Client", "Server"]
 	"All-Minimized":
 		"minimize": true
-		"command": "build-minimized"
+		"command": "build:minimized"
 		"description": "Does the same thing as build, then minimizes the finished library file."
 		"dependencies": ["All"]
 	"Core":
-		"command": "build-core"
+		"command": "build:core"
 		"description": "Builds only the core components of the library."
 		"files": [
 			"Meta.coffee"
@@ -32,15 +32,15 @@ files =
 			"Synchronizable.coffee"
 		]
 	"Client":
-		"command": "build-client"
+		"command": "build:client"
 		"description": "Includes code relevant to client-side development."
 		"dependencies": ["Core"]
 		"files": [
 			"HTML/Element.coffee"
 		]
 	"Server":
-		"command": "build-server"
-		"description": "Includes code relevant to server-side development."
+		"command": "build:server"
+		"description": "Includes code relevant to server-side development in Node.js."
 		"dependencies": ["Core"]
 	"Testing":
 		"private": true
@@ -138,6 +138,8 @@ getFiles = (packageName, loadedPackages = []) ->
 		for file in package.files
 			# Add this file with the package name as the parent directory
 			fileList.push "#{packageName}/#{file}"
+	# State that we were processing the file list for this package
+	echo "Processing #{packageName}."
 	# Return the file list
 	return fileList
 
@@ -149,6 +151,8 @@ build = (packageName) ->
 	fileList = getFiles packageName
 	# Create a place to store all of the file data
 	data = []
+	# State that we are reading all of the files
+	echo "Reading all files included in #{packageName}."
 	# Loop over each of the files in the file list and push the contents of the
 	# file into the data array
 	data.push read "CoffeeScript/#{file}" for file in fileList
@@ -159,6 +163,8 @@ build = (packageName) ->
 	write "#{libraryName}.coffee", data
 	# Determine what the CoffeeScript compile command needs to be
 	command = "coffee -pc #{libraryName}.coffee > JavaScript/#{libraryName}.js"
+	# State that we are compiling the CoffeeScript file
+	echo "Compiling #{packageName}."
 	# Execute the CoffeeScript compiler on the temporary file
 	exec command, (err, stdout, stderr) ->
 		# Handle the error if we have one
@@ -167,18 +173,22 @@ build = (packageName) ->
 		erase "#{libraryName}.coffee"
 		# If we should run the compiled JavaScript file
 		if package.run? and package.run
+			# State that we are running the compiled library code under Node.js
+			echo "Running #{packageName} under Node.js."
 			# Run it under Node.js
 			exec "node JavaScript/#{libraryName}.js", (err, stdout, stderr) ->
-				# Display the output without whitespace
-				echo trim stdout
+				# Display stdout if there is any output to display
+				echo stdout if stdout isnt ""
 		# If we should attempt to minimize the compiled JavaScript file
 		if package.minimize? and package.minimize
 			# Determine the command to minimize the JavaScript file
 			command = "cat JavaScript/#{libraryName}.js | jsmin > JavaScript/#{libraryName}.min.js"
+			# State that we are attempting to minimize the package with jsmin
+			echo "Minimizing #{packageName} with jsmin."
 			# Attempt to use jsmin to minimize the JavaScript
 			exec command, (err, stdout, stderr) ->
-				# Display the output without whitespace
-				echo trim stdout
+				# Display stdout if there is any output to display
+				echo stdout if stdout isnt ""
 
 # Loop over the files object and define the tasks this Cakefile exposes
 for name, rules of files
@@ -193,6 +203,8 @@ for name, rules of files
 
 # Define the task that resets everything
 task "clean", "Removes everything that build creates", ->
+	# State that we are doing something
+	echo "Erasing files created by build tasks."
 	# Erase all JavaScript files in the JavaScript directory
 	erase "JavaScript/#{libraryName}.js"
 	erase "JavaScript/#{libraryName}.min.js"
