@@ -205,6 +205,8 @@ for name, rules of files
 task "clean", "Removes everything that build creates", ->
 	# State that we are doing something
 	echo "Erasing files created by build tasks."
+	# Erase the temporary CoffeeScript file just in case its still there
+	erase "#{libraryName}.coffee"
 	# Erase all JavaScript files in the JavaScript directory
 	erase "JavaScript/#{libraryName}.js"
 	erase "JavaScript/#{libraryName}.min.js"
