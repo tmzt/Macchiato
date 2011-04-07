@@ -44,7 +44,7 @@ class Tasks
 		# Increment the current task by 1
 		@currentTask++
 		# Run the current task, forwarding the arguments that were passed in
-		return @run arguments
+		return @run.apply this, Array.prototype.slice.call arguments, 0
 
 	# Runs the previous task in the tasks queue.
 	#
@@ -55,7 +55,7 @@ class Tasks
 		# Decrement the current task by 1
 		@currentTask--
 		# Run the current task, forwarding the arguments that were passed in
-		return @run arguments
+		return @run.apply this, Array.prototype.slice.call arguments, 0
 
 	# Returns true if a task exists in the specified queue location.
 	#
@@ -71,10 +71,8 @@ class Tasks
 	#                      forwarded to the task method itself.
 	# return  object       A reference to this class instance.
 	run: ->
-		# Create a shortcut variable to the slice function on the Array class
-		slice = Array.prototype.slice
 		# Make an exact copy of the arguments array
-		taskArguments = slice.call arguments, 0
+		taskArguments = Array.prototype.slice.call arguments, 0
 		# Make a reference to this class instance the first argument that we
 		# will pass into the task function
 		taskArguments.unshift @

@@ -61,6 +61,7 @@ files =
 		"files": [
 			"Core/Observable.coffee"
 			"Core/Publish/Subscribe.coffee"
+			"Core/Tasks.coffee"
 		]
 
 # Trims any whitespace off of the ends of the passed string value
