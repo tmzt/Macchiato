@@ -18,13 +18,13 @@ class TestTasks extends Tests
 				test.assertEqual "the number is 90", 90, theNumber
 				# Assert that the passed string is the letter X
 				test.assertEqual "the string is X", "X", theString
-				# Create a simple DelayedTask to wait a second before moving on
-				# to the next Tasks task function
+				# Create a simple DelayedTask to wait 1/4th of a second before
+				# on to the next Tasks function
 				simpleDelay = new DelayedTask ->
 					# Move on to the next Tasks task, forwarding the passed
 					# value string
 					taskControl.next "Y"
-				, 1000
+				, 250
 				# After a second, move on to the next task
 				simpleDelay.run()
 			# Define the third task
