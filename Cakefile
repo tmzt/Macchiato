@@ -29,6 +29,7 @@ files =
 			"Timer/Task.coffee"
 			"Delayed/Task.coffee"
 			"Debounced/Task.coffee"
+			"Repeated/Task.coffee"
 			"Tasks.coffee"
 			"Synchronizable.coffee"
 		]
