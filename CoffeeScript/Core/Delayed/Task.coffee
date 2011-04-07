@@ -17,6 +17,9 @@ class DelayedTask extends Task
 	constructor: (taskFunction, delay = 1, runScope = @) ->
 		# Invoke the parent constructor
 		super taskFunction, runScope
+		# Store the value of the delay argument to a class variable of the same
+		# name
+		@delay = delay
 		# Set the instance variables to their initial state
 		@reset()
 
