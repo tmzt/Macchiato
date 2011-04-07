@@ -17,8 +17,6 @@ class Tasks
 	#
 	# return  object  A reference to this class instance.
 	reset: ->
-		# Holds the state object that the tasks share
-		@state = {}
 		# Holds the current list of tasks
 		@taskQueue = []
 		# Holds the next task index to run
@@ -45,8 +43,8 @@ class Tasks
 		return @ unless @exists @currentTask + 1
 		# Increment the current task by 1
 		@currentTask++
-		# Run the current task
-		return @run()
+		# Run the current task, forwarding the arguments that were passed in
+		return @run arguments
 
 	# Runs the previous task in the tasks queue.
 	#
@@ -56,23 +54,33 @@ class Tasks
 		return @ unless @exists @currentTask - 1
 		# Decrement the current task by 1
 		@currentTask--
-		# Run the current task
-		return @run()
+		# Run the current task, forwarding the arguments that were passed in
+		return @run arguments
 
 	# Returns true if a task exists in the specified queue location.
 	#
 	# param   integer  taskIndex  The index in the task queue to check.
 	# return  boolean             If the requested queue index exists, true.
 	exists: (taskIndex) ->
-		@taskQueue[taskIndex]?
+		# Determine if the current task function exists or not
+		return @taskQueue[taskIndex]?
 
 	# Runs the current task in the task queue.
 	#
-	# return  object  A reference to this class instance.
+	# param   mixed   ...  Accepts any number of arguments which will be
+	#                      forwarded to the task method itself.
+	# return  object       A reference to this class instance.
 	run: ->
+		# Create a shortcut variable to the slice function on the Array class
+		slice = Array.prototype.slice
+		# Make an exact copy of the arguments array
+		taskArguments = slice.call arguments, 0
+		# Make a reference to this class instance the first argument that we
+		# will pass into the task function
+		taskArguments.unshift @
 		# Run the current task, passing in a reference to the this Tasks class
 		# instance, assuming we have a task at this queue position
-		@taskQueue[@currentTask].run([@, @state]) if @exists @currentTask
+		@taskQueue[@currentTask].run(taskArguments) if @exists @currentTask
 		# Return a reference to this class instance
 		return @
 
