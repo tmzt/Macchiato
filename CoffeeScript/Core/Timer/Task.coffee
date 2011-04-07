@@ -1,6 +1,6 @@
 # This file defines the TimerTask class.
 #
-# TimedTask delegates the actual running of the task function to one of the two
+# TimerTask delegates the actual running of the task function to one of the two
 # available native JavaScript timer metaphors, either setTimeout or
 # setInterval.
 class TimerTask extends Task
