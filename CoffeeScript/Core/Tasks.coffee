@@ -43,6 +43,7 @@ class Tasks
 		return @ unless @exists @currentTask + 1
 		# Increment the current task by 1
 		@currentTask++
+		# TODO: Replace the goofy arguments-to-array logic with something else
 		# Run the current task, forwarding the arguments that were passed in
 		return @run.apply this, Array.prototype.slice.call arguments, 0
 
@@ -54,6 +55,7 @@ class Tasks
 		return @ unless @exists @currentTask - 1
 		# Decrement the current task by 1
 		@currentTask--
+		# TODO: Replace the goofy arguments-to-array logic with something else
 		# Run the current task, forwarding the arguments that were passed in
 		return @run.apply this, Array.prototype.slice.call arguments, 0
 
@@ -71,6 +73,7 @@ class Tasks
 	#                      forwarded to the task method itself.
 	# return  object       A reference to this class instance.
 	run: ->
+		# TODO: Replace the goofy arguments-to-array logic with something else
 		# Make an exact copy of the arguments array
 		taskArguments = Array.prototype.slice.call arguments, 0
 		# Make a reference to this class instance the first argument that we
