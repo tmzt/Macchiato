@@ -25,7 +25,7 @@ class TestTasks extends Tests
 					# value string
 					taskControl.next "Y"
 				, 250
-				# After a second, move on to the next task
+				# Run the DelayedTask
 				simpleDelay.run()
 			# Define the third task
 			(taskControl, differentString) ->
