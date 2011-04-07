@@ -2,15 +2,15 @@
 #
 # DelayedTask wraps the actual running of the task function in a JavaScript
 # timeout using the setTimeout function. This makes the execution of the "run"
-# method on this class detached from the eventual execution of the task function
-# itself.
+# method on this class detached from the eventual execution of the task
+# function itself.
 class DelayedTask extends TimerTask
 
 	# Takes the task function and any options, then assigns them to this
 	# object.
 	#
 	# param  function  taskFunction            The task function itself.
-	# param  integer   delay         optional  The length off the delay, in
+	# param  integer   delay         optional  The length of the delay, in
 	#                                          milliseconds. Defaults to 1.
 	# param  object    runScope      optional  The scope to run the task
 	#                                          function at. Defaults to @.
