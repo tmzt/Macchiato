@@ -26,6 +26,7 @@ files =
 			"Publish/Subscribe.coffee"
 			"Log.coffee"
 			"Task.coffee"
+			"Timer/Task.coffee"
 			"Delayed/Task.coffee"
 			"Debounced/Task.coffee"
 			"Tasks.coffee"
@@ -61,6 +62,7 @@ files =
 		"files": [
 			"Core/Observable.coffee"
 			"Core/Publish/Subscribe.coffee"
+			"Core/Delayed/Task.coffee"
 			"Core/Tasks.coffee"
 		]
 
