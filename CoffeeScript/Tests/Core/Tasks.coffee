@@ -19,7 +19,7 @@ class TestTasks extends Tests
 				# Assert that the passed string is the letter X
 				test.assertEqual "the string is X", "X", theString
 				# Create a simple DelayedTask to wait 1/4th of a second before
-				# on to the next Tasks function
+				# moving on to the next Tasks function
 				simpleDelay = new DelayedTask ->
 					# Move on to the next Tasks task, forwarding the passed
 					# value string
