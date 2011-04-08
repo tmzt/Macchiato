@@ -38,7 +38,6 @@ Meta = {
 		destination[name] = reference for own name, reference of Meta.exposed
 		# Return a reference to the destination object
 		return destination
-	
 }
 
 # Expose the overlay function itself
