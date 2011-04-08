@@ -11,7 +11,7 @@ files =
 	"All":
 		"command": "build"
 		"description": "Builds the complete library, excluding unit tests."
-		"dependencies": ["Client", "Server"]
+		"dependencies": ["Client", "Server", "Testing"]
 	"All-Minimized":
 		"minimize": true
 		"command": "build:minimized"
