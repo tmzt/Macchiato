@@ -15,7 +15,7 @@ class TestObservable extends Tests
 			# Mark this test as complete
 			test.complete()
 		# Attempt to trigger the observer function by issuing a notification
-		observable.publish ["T"]
+		observable.publish "T"
 
 # Add this test class to the tests collection
 Meta.test "TestObservable", TestObservable
