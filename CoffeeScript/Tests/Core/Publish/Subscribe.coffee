@@ -24,7 +24,7 @@ class TestPublishSubscribe extends Tests
 			test.complete()
 		# Attempt to trigger the observer function by issuing a notification in
 		# the channel-a topic, passing the number 11 as the message
-		instance.publish "channel-a", [11]
+		instance.publish "channel-a", 11
 
 	# Attempts to add an observer to the universal channel and tests to make
 	# sure that the universal channel sees notifications on all of the
@@ -54,9 +54,9 @@ class TestPublishSubscribe extends Tests
 			test.complete() if counter is 3
 		# Attempt to trigger the universal channel a total of 3 times using
 		# channel-a, then channel-b, then channel-c
-		instance.publish "channel-a", [1]
-		instance.publish "channel-b", [2]
-		instance.publish "channel-c", [3]
+		instance.publish "channel-a", 1
+		instance.publish "channel-b", 2
+		instance.publish "channel-c", 3
 
 	# Confirms that notifications issued on specific topic channels do not
 	# get picked up by the other named topic channels.
