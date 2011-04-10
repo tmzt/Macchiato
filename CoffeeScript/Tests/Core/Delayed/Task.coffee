@@ -15,7 +15,7 @@ class TestDelayedTask extends Tests
 			test.complete()
 		, 250
 		# Start the DelayedTask, passing in 70 as the value
-		task.run(70)
+		task.run 70
 
 # Add this test class to the tests collection
 Meta.test "TestDelayedTask", TestDelayedTask
