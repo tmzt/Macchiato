@@ -22,6 +22,7 @@ files =
 		"description": "Builds only the core components of the library."
 		"files": [
 			"Meta.coffee"
+			"Arguments.coffee"
 			"Observable.coffee"
 			"Publish/Subscribe.coffee"
 			"Log.coffee"
