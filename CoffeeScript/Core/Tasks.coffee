@@ -74,14 +74,13 @@ class Tasks
 	# return  object       A reference to this class instance.
 	run: ->
 		# TODO: Replace the goofy arguments-to-array logic with something else
-		# Make an exact copy of the arguments array
 		taskArguments = Array.prototype.slice.call arguments, 0
 		# Make a reference to this class instance the first argument that we
 		# will pass into the task function
 		taskArguments.unshift @
 		# Run the current task, passing in a reference to the this Tasks class
 		# instance, assuming we have a task at this queue position
-		@taskQueue[@currentTask].run(taskArguments) if @exists @currentTask
+		@taskQueue[@currentTask].run taskArguments if @exists @currentTask
 		# Return a reference to this class instance
 		return @
 

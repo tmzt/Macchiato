@@ -30,14 +30,12 @@ class Observable
 	# Issues an event to all of the observer functions in the observers
 	# collection on this class instance.
 	#
-	# param   array   observerArguments  optional  Any arguments that we want to
-	#                                              forward to all of the
-	#                                              observer functions. Defaults
-	#                                              to an empty array if nothing
-	#                                              is passed in.
-	# return  object                               A reference to this class
-	#                                              instance.
-	notifyObservers: (observerArguments = []) ->
+	# param   mixed   ...  optional  Any number of arguments that we want to
+	#                                forward to all of the observer functions.
+	# return  object                 A reference to this class instance.
+	notifyObservers: ->
+		# TODO: Replace the goofy arguments-to-array logic with something else
+		observerArguments = Array.prototype.slice.call arguments, 0
 		# If we have any observer functions
 		if @observers.length > 0
 			# Notify all of the observer functions in the observers collection
@@ -46,10 +44,12 @@ class Observable
 		return @
 
 	# Simple alias for notifyObservers.
-	publish: (observerArguments = []) ->
+	publish: ->
+		# TODO: Replace the goofy arguments-to-array logic with something else
+		observerArguments = Array.prototype.slice.call arguments, 0
 		# Return the result of the notifyObservers method, passing the same
 		# argument value
-		return @notifyObservers observerArguments
+		return @notifyObservers.apply @, observerArguments
 
 # Expose this class to the parent scope
 Meta.expose "Observable", Observable
