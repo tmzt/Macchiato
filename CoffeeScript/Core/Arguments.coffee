@@ -1,7 +1,7 @@
 # This file defines the Arguments class, and exposes it to the outside world.
 #
 # The Arguments class exposes utility methods that make working with the
-# special JavaScript arguments object easier. 
+# special JavaScript arguments object easier.
 class Arguments
 
 	# Accepts the a reference to the arguments object, converts it to an array, 
