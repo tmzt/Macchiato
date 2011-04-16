@@ -79,33 +79,31 @@ class PublishSubscribe
 	# channel, and, if a named topic channel is provided, the named topic
 	# channel as well.
 	#
-	# param   string  name                         The named topic channel that
-	#                                              we want to notify. If the
-	#                                              name is "*", only the
-	#                                              universal channel is issued
-	#                                              the notification. Otherwise,
-	#                                              both the named topic channel
-	#                                              as well as the universal
-	#                                              channel are notified.
-	# param   array   observerArguments  optional  Any arguments that we want to
-	#                                              forward to all of the
-	#                                              observer functions. Defaults
-	#                                              to an empty array if nothing
-	#                                              is passed in. Subscribers to
-	#                                              the universal channel will
-	#                                              receive the name of the topic
-	#                                              channel as the first argument
-	#                                              to the observer function,
-	#                                              followed by the rest of the
-	#                                              arguments.
-	# return  object                               A reference to this class
-	#                                              instance.
-	notifyObservers: (name, observerArguments = []) ->
-		# If a channel name was passed in
-		if name isnt "*"
+	# param   string  name            The named topic channel that we want to
+	#                                 notify. If the name is "*", only the
+	#                                 universal channel is issued the notification.
+	#                                 Otherwise, both the named topic channel as
+	#                                 well as the universal channel are notified.
+	# param   mixed   ...   optional  Any arguments that we want to forward to all
+	#                                 of the observer functions. Defaults to an
+	#                                 empty array if nothing is passed in.
+	#                                 Subscribers to the universal channel will
+	#                                 also receive the name of the topic channel as
+	#                                 the first argument to the observer function,
+	#                                 followed by the rest of the arguments.
+	# return  object                  A reference to this class instance.
+	notifyObservers: (name) ->
+		# Create a new instance of the Arguments class to make working with the
+		# JavaScript arguments object easier
+		notificationArguments = (new Arguments(arguments)).toArray()
+		# If the channel name that was passed in is not for the universal channel
+		if name isnt "*" and @namedChannels[name]?
+			# The arguments that we will forward to the named topic channel are
+			# everything that was passed in after the name argument
+			observerArguments = notificationArguments.slice 1
 			# Notify the observers on the named topic channel, if the named
 			# topic channel exists
-			@namedChannels[name]?.notifyObservers observerArguments
+			@namedChannels[name]?.executeMethod "notifyObservers", observerArguments
 		# Make a copy of the observer arguments so we can safely modify it
 		universalArguments = observerArguments.slice 0
 		# Make the topic channel name the first argument
