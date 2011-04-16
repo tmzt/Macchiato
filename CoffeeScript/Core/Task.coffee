@@ -32,17 +32,18 @@ class Task extends PublishSubscribe
 
 	# Runs the task function using the passed arguments.
 	#
-	# param   array   taskArguments  optional  Arguments to forward to the task
-	#                                          function itself.
-	# return  object                           A reference to this class
-	#                                          instance.
-	run: (taskArguments = []) ->
+	# param   mixed   ...  optional  Any number of arguments to forward to the task
+	#                                function itself.
+	# return  object                 A reference to this class instance.
+	run: () ->
+		# Create a new instance of the Arguments class
+		taskArguments = new Arguments arguments
 		# Notify any observers attached to the "run" channel
 		@notifyObservers "run", [@]
 		# Wrap this run attempt in a try/catch so we can capture exceptions
 		try
 			# Run this task using the run scope object as the function scope
-			@taskFunction.apply @runScope, taskArguments
+			@taskFunction.apply @runScope, taskArguments.toArray()
 		# If an exception is thrown, catch it
 		catch exception
 			# Notify any observers attached to the "exception" channel
