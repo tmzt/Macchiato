@@ -34,19 +34,23 @@ class Observable
 	#                                forward to all of the observer functions.
 	# return  object                 A reference to this class instance.
 	notifyObservers: ->
-		# TODO: Replace the goofy arguments-to-array logic with something else
-		observerArguments = Array.prototype.slice.call arguments, 0
-		# If we have any observer functions
-		if @observers.length > 0
-			# Notify all of the observer functions in the observers collection
-			observer.apply @, observerArguments for observer in @observers
+		# If we do not have any observer functions
+		if @observers.length < 1
+			# Do nothing but return a reference to this class instance
+			return @
+		# Create an instance of the Arguments class to deal with the odd behavior
+		# of the JavaScript arguments object, then get the array value
+		observerArguments = (new Arguments(arguments)).toArray()
+		# Notify all of the observer functions in the observers collection
+		observer.apply @, observerArguments for observer in @observers
 		# Return a reference to this class instance
 		return @
 
 	# Simple alias for notifyObservers.
 	publish: ->
-		# TODO: Replace the goofy arguments-to-array logic with something else
-		observerArguments = Array.prototype.slice.call arguments, 0
+		# Create an instance of the Arguments class to deal with the odd behavior
+		# of the JavaScript arguments object, then get the array value
+		observerArguments = (new Arguments(arguments)).toArray()
 		# Return the result of the notifyObservers method, passing the same
 		# argument value
 		return @notifyObservers.apply @, observerArguments
