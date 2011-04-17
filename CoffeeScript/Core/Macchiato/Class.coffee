@@ -11,7 +11,7 @@ class MacchiatoClass
 	# param   array   argumentsArray  The arguments to forward to the named
 	#                                 method.
 	# return  mixed                   The result of the method call.
-	callMethod: (name, argumentsArray = []) ->
+	executeMethod: (name, argumentsArray = []) ->
 		# Run the named method forwarding the arguments that were passed in
 		@[name].apply @, argumentsArray
 
