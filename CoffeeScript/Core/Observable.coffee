@@ -4,7 +4,7 @@
 # subset of the publish/subscribe or pub/sub pattern. If provided, Observable
 # notification messages are sent to all of the observer functions in the
 # observers collection.
-class Observable
+class Observable extends MacchiatoClass
 
 	# Creates the class variable to store the observers.
 	constructor: ->
@@ -53,7 +53,7 @@ class Observable
 		observerArguments = (new Arguments(arguments)).toArray()
 		# Return the result of the notifyObservers method, passing the same
 		# argument value
-		return @notifyObservers.apply @, observerArguments
+		return @methodCallArray "notifyObservers", observerArguments
 
 # Expose this class to the parent scope
 Meta.expose "Observable", Observable
