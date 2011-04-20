@@ -52,8 +52,8 @@ class Observable extends MacchiatoClass
 		# of the JavaScript arguments object, then get the array value
 		observerArguments = (new Arguments(arguments)).toArray()
 		# Return the result of the notifyObservers method, passing the same
-		# argument value
-		return @methodCallArray "notifyObservers", observerArguments
+		# argument values that were passed in
+		return @callMethodArray "notifyObservers", observerArguments
 
 # Expose this class to the parent scope
 Meta.expose "Observable", Observable
