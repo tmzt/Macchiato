@@ -2,7 +2,7 @@
 #
 # The Arguments class exposes utility methods that make working with the
 # special JavaScript arguments object easier.
-class Arguments
+class Arguments extends MacchiatoClass
 
 	# Accepts the a reference to a JavaScript arguments object or an array,
 	# and stores the array version of the passed arguments on this class instance
