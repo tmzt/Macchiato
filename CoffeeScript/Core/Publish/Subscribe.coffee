@@ -11,7 +11,7 @@
 #
 # Subscribers are expected to subscribe to either the named topic channel, or
 # the universal channel. Subscribers cannot subscribe to both.
-class PublishSubscribe
+class PublishSubscribe extends MacchiatoClass
 
 	# Creates the universal observable channel and initializes the class
 	# variable for named topic channels. If an array of topic channels is
@@ -103,21 +103,22 @@ class PublishSubscribe
 			observerArguments = notificationArguments.slice 1
 			# Notify the observers on the named topic channel, if the named
 			# topic channel exists
-			@namedChannels[name]?.executeMethod "notifyObservers", observerArguments
-		# Make a copy of the observer arguments so we can safely modify it
-		universalArguments = observerArguments.slice 0
-		# Make the topic channel name the first argument
-		universalArguments.unshift name
+			@namedChannels[name]?.callMethodArray "notifyObservers",
+				observerArguments
 		# Notify the observers on the universal channel no matter what
-		@universalChannel.notifyObservers universalArguments
+		@universalChannel.callMethodArray "notifyObservers",
+			notificationArguments
 		# Return a reference to this class instance
 		return @
 
 	# Simple alias for notifyObservers.
-	publish: (name, observerArguments = []) ->
+	publish: ->
+		# Create a new instance of the Arguments class to make working with the
+		# JavaScript arguments object easier
+		notificationArguments = (new Arguments(arguments)).toArray()
 		# Return the result of the notifyObservers method, passing the same
 		# arguments
-		return @notifyObservers name, observerArguments
+		return @callMethodArray "notifyObservers", notificationArguments
 
 # Expose this class to the parent scope
 Meta.expose "PublishSubscribe", PublishSubscribe

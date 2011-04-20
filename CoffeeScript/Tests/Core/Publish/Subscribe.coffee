@@ -82,9 +82,9 @@ class TestPublishSubscribe extends Tests
 		# Attempt to trigger each of the individual observer functions, first
 		# the universal channel, then channel-a, then channel-b, then channel-c
 		instance.publish "*"
-		instance.publish "channel-a", [1]
-		instance.publish "channel-b", [2]
-		instance.publish "channel-c", [3]
+		instance.publish "channel-a", 1
+		instance.publish "channel-b", 2
+		instance.publish "channel-c", 3
 
 # Add this test class to the tests collection
 Meta.test "TestPublishSubscribe", TestPublishSubscribe

@@ -35,11 +35,11 @@ class Task extends PublishSubscribe
 	# param   mixed   ...  optional  Any number of arguments to forward to the task
 	#                                function itself.
 	# return  object                 A reference to this class instance.
-	run: () ->
+	run: ->
 		# Create a new instance of the Arguments class
 		taskArguments = new Arguments arguments
 		# Notify any observers attached to the "run" channel
-		@notifyObservers "run", [@]
+		@notifyObservers "run", @
 		# Wrap this run attempt in a try/catch so we can capture exceptions
 		try
 			# Run this task using the run scope object as the function scope
@@ -47,7 +47,7 @@ class Task extends PublishSubscribe
 		# If an exception is thrown, catch it
 		catch exception
 			# Notify any observers attached to the "exception" channel
-			@notifyObservers "exception", [@, exception]
+			@notifyObservers "exception", @, exception
 		# Return a reference to this class instance
 		return @
 
