@@ -36,17 +36,7 @@ Macchiato needs your help! If you want to be a contributer, of anything, you
 are more then welcome to do so. The project guidelines for contributors can be
 found in the official project Wiki [here][wiki-guidelines].
 
-## Comments from the Developer(s) ##
-
-> "Macchiato is everything that I have ever found myself writing over, and over,
-> and over again." - [sheatrevor][github-sheatrevor]
-
-If you have any comments that you would like to add, please feel free to do so
-by creating your own paragraph and tagging it at the end with your username and
-a URL of your choice.
-
 [homepage-coffeescript]: http://jashkenas.github.com/coffee-script/ "CoffeeScript's Homepage"
 [repo-license]: ./Macchiato/blob/master/LICENSE "View the file LICENSE in the Macchiato project repository"
 [wikipedia-mit-license]: http://en.wikipedia.org/wiki/MIT_License "Wikipedia article for the MIT License"
 [wiki-guidelines]: ./Macchiato/wiki/Guidelines-for-Contributors "Macchiato Wiki - Guidelines for Contributors"
-[github-sheatrevor]: http://github.com/sheatrevor/ "Shea Trevor's profile on GitHub"
