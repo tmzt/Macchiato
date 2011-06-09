@@ -1,6 +1,6 @@
 # Manages a list of Task classes and provides a set of stepper methods to
 # advance and rewind the current position in the tasks queue.
-class Tasks
+class Tasks extends MacchiatoClass
 
 	# Initialize the class variables and add any Task functions that were
 	# passed in.
@@ -37,15 +37,20 @@ class Tasks
 
 	# Runs the next task function in the tasks queue.
 	#
-	# return  object  Returns the result of the run class method.
+	# param   mixed   ...  optional  Any number of arguments that we want to
+	#                                forward to all of the observer functions.
+	# return  object                 Returns the result of the run class
+	#                                method.
 	next: ->
 		# Do nothing unless a next task actually exists
 		return @ unless @exists @currentTask + 1
 		# Increment the current task by 1
 		@currentTask++
-		# TODO: Replace the goofy arguments-to-array logic with something else
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
+		taskArguments = (new Arguments(arguments)).toArray()
 		# Run the current task, forwarding the arguments that were passed in
-		return @run.apply this, Array.prototype.slice.call arguments, 0
+		return @callMethodArray "run", taskArguments
 
 	# Runs the previous task in the tasks queue.
 	#
@@ -55,9 +60,11 @@ class Tasks
 		return @ unless @exists @currentTask - 1
 		# Decrement the current task by 1
 		@currentTask--
-		# TODO: Replace the goofy arguments-to-array logic with something else
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
+		taskArguments = (new Arguments(arguments)).toArray()
 		# Run the current task, forwarding the arguments that were passed in
-		return @run.apply this, Array.prototype.slice.call arguments, 0
+		return @callMethodArray "run", taskArguments
 
 	# Returns true if a task exists in the specified queue location.
 	#
@@ -73,14 +80,15 @@ class Tasks
 	#                      forwarded to the task method itself.
 	# return  object       A reference to this class instance.
 	run: ->
-		# TODO: Replace the goofy arguments-to-array logic with something else
-		taskArguments = Array.prototype.slice.call arguments, 0
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
+		taskArguments = (new Arguments(arguments)).toArray()
 		# Make a reference to this class instance the first argument that we
-		# will pass into the task function
+		# pass into the task function
 		taskArguments.unshift @
 		# Run the current task, passing in a reference to the this Tasks class
 		# instance, assuming we have a task at this queue position
-		@taskQueue[@currentTask].run taskArguments if @exists @currentTask
+		@taskQueue[@currentTask].callMethodArray "run", taskArguments if @exists @currentTask
 		# Return a reference to this class instance
 		return @
 

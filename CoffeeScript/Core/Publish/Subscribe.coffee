@@ -17,15 +17,18 @@ class PublishSubscribe extends MacchiatoClass
 	# variable for named topic channels. If an array of topic channels is
 	# passed in, these channels are added.
 	#
-	# param   array  names  optional  An array of topic channel names to
-	#                                 create. Defaults to an empty array.
-	constructor: (names = []) ->
+	# param   string  ...  optional  Any number of arguments that we want to
+	#                                create named topic channels for.
+	constructor: ->
 		# Create an instance of Observable for the universal channel
 		@universalChannel = new Observable()
 		# Create a place for any named topic channels to go
 		@namedChannels = {}
-		# Add any topic channels that were passed in
-		@addChannels names if names.length > 0
+		# Grab any arguments that may have been passed in and convert them to a
+		# simple array of argument values which are named topic channels
+		names = (new Arguments(arguments)).toArray()
+		# If any named topic channels were passed in, create them
+		@callMethodArray "addChannels", names if names.length > 0
 
 	# Create a way to add a named topic channel where event messages can be
 	# published.
@@ -41,9 +44,13 @@ class PublishSubscribe extends MacchiatoClass
 	# Accepts an array of strings which should each be a named topic channel
 	# to be created.
 	#
-	# param   array  names  An array of topic channel names to create.
-	# return  object        A reference to this class instance.
-	addChannels: (names) ->
+	# param   string  ...  optional  Any number of arguments that we want to
+	#                                create named topic channels for.
+	# return  object                 A reference to this class instance.
+	addChannels: ->
+		# Grab any arguments that may have been passed in and convert them to a
+		# simple array of argument values which are named topic channels
+		names = (new Arguments(arguments)).toArray()
 		# If we have topic channel names to add, add them
 		@addChannel name for name in names if names.length > 0
 		# Return a reference to this class instance
@@ -93,8 +100,8 @@ class PublishSubscribe extends MacchiatoClass
 	#                                 followed by the rest of the arguments.
 	# return  object                  A reference to this class instance.
 	notifyObservers: (name) ->
-		# Create a new instance of the Arguments class to make working with the
-		# JavaScript arguments object easier
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
 		notificationArguments = (new Arguments(arguments)).toArray()
 		# If the channel name that was passed in is not for the universal channel
 		if name isnt "*" and @namedChannels[name]?
@@ -113,8 +120,8 @@ class PublishSubscribe extends MacchiatoClass
 
 	# Simple alias for notifyObservers.
 	publish: ->
-		# Create a new instance of the Arguments class to make working with the
-		# JavaScript arguments object easier
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
 		notificationArguments = (new Arguments(arguments)).toArray()
 		# Return the result of the notifyObservers method, passing the same
 		# arguments

@@ -38,8 +38,8 @@ class Observable extends MacchiatoClass
 		if @observers.length < 1
 			# Do nothing but return a reference to this class instance
 			return @
-		# Create an instance of the Arguments class to deal with the odd behavior
-		# of the JavaScript arguments object, then get the array value
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
 		observerArguments = (new Arguments(arguments)).toArray()
 		# Notify all of the observer functions in the observers collection
 		observer.apply @, observerArguments for observer in @observers
@@ -48,8 +48,8 @@ class Observable extends MacchiatoClass
 
 	# Simple alias for notifyObservers.
 	publish: ->
-		# Create an instance of the Arguments class to deal with the odd behavior
-		# of the JavaScript arguments object, then get the array value
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
 		observerArguments = (new Arguments(arguments)).toArray()
 		# Return the result of the notifyObservers method, passing the same
 		# argument values that were passed in

@@ -8,6 +8,8 @@
 # This sort of methodology tends to work really well for situations in which
 # multiple thread-blocking events need to be condensed into a single action
 # that can be executed whenever the JavaScript thread becomes available again.
+# Examples could include lazy user interface rendering or background data
+# synchronization.
 class DebouncedTask extends DelayedTask
 
 	# Takes the task function and any options, then assigns them to this object.
@@ -28,11 +30,14 @@ class DebouncedTask extends DelayedTask
 	#                                          function itself.
 	# return  object                           A reference to this class
 	#                                          instance.
-	run: (taskArguments = []) ->
+	run: ->	
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
+		taskArguments = (new Arguments(arguments)).toArray()
 		# Automatically reset the timeout if it has already been started
 		@cancel()
 		# Call the parent run method
-		super taskArguments
+		DebouncedTask.__super__.run.apply @, taskArguments
 		# Return a reference to this class instance
 		return @
 

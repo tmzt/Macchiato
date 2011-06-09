@@ -61,15 +61,17 @@ class TimerTask extends Task
 
 	# Runs the task function using the passed arguments.
 	#
-	# param   array   taskArguments  optional  Arguments to forward to the task
-	#                                          function itself.
-	# return  object                           A reference to this class
-	#                                          instance.
-	run: (taskArguments = []) ->
+	# param   mixed   ...  optional  Any number of arguments to forward to the task
+	#                                function itself.
+	# return  object                 A reference to this class instance.
+	run: ->
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
+		taskArguments = (new Arguments(arguments)).toArray()
 		# Store a reference to the timer
 		@timerReference = @timer =>
 			# Notify any observers attached to the "run" channel
-			@notifyObservers "run", [@]
+			@notifyObservers "run", @
 			# Inform the class that this timer function has been run
 			@timerExecuted = yes
 			# Wrap this run attempt in a try/catch so we can capture exceptions
@@ -79,7 +81,7 @@ class TimerTask extends Task
 			# If an exception is thrown, catch it
 			catch exception
 				# Notify any observers attached to the "exception" channel
-				@notifyObservers "exception", [@, exception]
+				@notifyObservers "exception", @, exception
 		# Forward the desired interval to the timer function
 		, @interval
 		# Return a reference to this class instance

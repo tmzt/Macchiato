@@ -31,7 +31,7 @@ class Test extends PublishSubscribe
 		@task = new Task testFunction, testScope
 		# Create the "start", "assertion", "complete", and exception named topic
 		# channels
-		@addChannels ["start", "assertion", "complete", "exception"]
+		@addChannels "start", "assertion", "complete", "exception"
 		# Create the flag that indicates if this test has started
 		@started = false
 		# Create the flag that indicates if this test is complete
