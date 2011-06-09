@@ -31,7 +31,7 @@ class Test extends PublishSubscribe
 		@task = new Task testFunction, testScope
 		# Create the "start", "assertion", "complete", and exception named topic
 		# channels
-		@addChannels ["start", "assertion", "complete", "exception"]
+		@addChannels "start", "assertion", "complete", "exception"
 		# Create the flag that indicates if this test has started
 		@started = false
 		# Create the flag that indicates if this test is complete
@@ -58,7 +58,7 @@ class Test extends PublishSubscribe
 			# Mark this test as having had an exception
 			@exception = true
 			# Forward the exception along to any observers
-			@notifyObservers "exception", [@, exception]
+			@notifyObservers "exception", @, exception
 		# Hold on to a reference to the task object
 		@task = task
 
@@ -69,9 +69,9 @@ class Test extends PublishSubscribe
 		# This test has started
 		@started = true
 		# Issue the start notification
-		@notifyObservers "start", [@]
+		@notifyObservers "start", @
 		# Execute the test function
-		@task.run [@]
+		@task.run @
 		# Return a reference to this class instance
 		return @
 
@@ -101,7 +101,7 @@ class Test extends PublishSubscribe
 		# Add this assertion to the local assertions collection
 		@assertions.push assertion
 		# Forward the assertion class instance to any observers
-		@notifyObservers "assertion", [@, assertion]
+		@notifyObservers "assertion", @, assertion
 		# Return a reference to this class instance
 		return @
 
@@ -160,7 +160,7 @@ class Test extends PublishSubscribe
 		@successful = true if @successful is null
 		# Issue the "complete" notification to any observers, forwarding a
 		# reference to this class instance
-		@notifyObservers "complete", [@]
+		@notifyObservers "complete", @
 		# Return a reference to this class instance
 		return @
 

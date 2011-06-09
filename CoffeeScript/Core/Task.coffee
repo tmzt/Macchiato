@@ -28,17 +28,19 @@ class Task extends PublishSubscribe
 		# Assign the value of the optional runScope parameter to this object
 		@runScope = runScope
 		# Define the observable named topic channels for this class
-		@addChannels ["run", "exception"]
+		@addChannels "run", "exception"
 
 	# Runs the task function using the passed arguments.
 	#
-	# param   array   taskArguments  optional  Arguments to forward to the task
-	#                                          function itself.
-	# return  object                           A reference to this class
-	#                                          instance.
-	run: (taskArguments = []) ->
+	# param   mixed   ...  optional  Any number of arguments to forward to the task
+	#                                function itself.
+	# return  object                 A reference to this class instance.
+	run: ->
+		# Create a new instance of the Arguments class to convert the arguments
+		# object into an array
+		taskArguments = (new Arguments(arguments)).toArray()
 		# Notify any observers attached to the "run" channel
-		@notifyObservers "run", [@]
+		@notifyObservers "run", @
 		# Wrap this run attempt in a try/catch so we can capture exceptions
 		try
 			# Run this task using the run scope object as the function scope
@@ -46,7 +48,7 @@ class Task extends PublishSubscribe
 		# If an exception is thrown, catch it
 		catch exception
 			# Notify any observers attached to the "exception" channel
-			@notifyObservers "exception", [@, exception]
+			@notifyObservers "exception", @, exception
 		# Return a reference to this class instance
 		return @
 

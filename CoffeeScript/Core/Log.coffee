@@ -10,7 +10,7 @@ class Log extends PublishSubscribe
 	constructor: ->
 		# Invoke the parent constructor, passing in the named topic channels
 		# this class instance supports
-		super ["info", "debug", "error"]
+		super "info", "debug", "error"
 
 	# Fires the appropriate notification to any observers that may be present. 
 	#
