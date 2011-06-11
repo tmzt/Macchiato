@@ -88,7 +88,8 @@ class Tasks extends MacchiatoClass
 		taskArguments.unshift @
 		# Run the current task, passing in a reference to the this Tasks class
 		# instance, assuming we have a task at this queue position
-		@taskQueue[@currentTask].callMethodArray "run", taskArguments if @exists @currentTask
+		@taskQueue[@currentTask].callMethodArray "run", taskArguments if \
+			@exists @currentTask
 		# Return a reference to this class instance
 		return @
 
