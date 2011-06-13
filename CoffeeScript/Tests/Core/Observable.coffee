@@ -11,7 +11,7 @@ class TestObservable extends Tests
 		# Attempt to add a single observer
 		observable.subscribe (message) ->
 			# Assert that the message is the letter T
-			test.assertEqual "the message is 'T'", "T", message
+			test.assertEquals "T", message, "the message is 'T'"
 			# Mark this test as complete
 			test.complete()
 		# Attempt to trigger the observer function by issuing a notification

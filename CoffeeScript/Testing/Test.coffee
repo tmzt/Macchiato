@@ -77,12 +77,12 @@ class Test extends PublishSubscribe
 
 	# Asserts that the value passed in the result parameter is boolean true.
 	#
-	# param   string   description  A human-readable description for this
-	#                               assertion.
 	# param   boolean  subject      The subject of the assertion, either true or
 	#                               false.
+	# param   string   description  A human-readable description for this
+	#                               assertion.
 	# return  object                A reference to this class instance.
-	assert: (description, subject) ->
+	assertTrue: (subject, description = "") ->
 		# If the assertion is true
 		if subject is true
 			# The assertion is a successful one
@@ -107,46 +107,46 @@ class Test extends PublishSubscribe
 
 	# Asserts that the value passed in the result parameter is boolean false.
 	#
-	# param   string   description  A human-readable description for this
-	#                               assertion.
 	# param   boolean  subject      The subject of the assertion, either true or
 	#                               false.
+	# param   string   description  A human-readable description for this
+	#                               assertion.
 	# return  object                A reference to this class instance.
-	assertFalse: (description, subject) ->
+	assertFalse: (subject, description) ->
 		# Assert that the subject is false and return the result
-		return @assert description, not subject
+		return @assertTrue not subject, description
 
 	# Asserts that the value passed in for the left-hand side of the comparison
 	# is exactly equal to the value passed in for the right-hand side of the
 	# comparison, then forwards the result of this test to the assert function.
 	#
-	# param   string   description  A human-readable description for this
-	#                               assertion.
 	# param   mixed    left         The value for the left-hand side of the
 	#                               equality comparison.		
 	# param   mixed    right        The value for the left-hand side of the
 	#                               equality comparison.
+	# param   string   description  A human-readable description for this
+	#                               assertion.
 	# return  object                A reference to this class instance.
-	assertEqual: (description, left, right) ->
+	assertEquals: (left, right, description) ->
 		# Compare the left to the right and then forward the result of the test
 		# along with the human-readable description to the assert function
-		return @assert description, left is right
+		return @assertTrue left is right, description
 
 	# Asserts that the value passed in for the left-hand side of the comparison
 	# is not equal to the value passed in for the right-hand side of the
 	# comparison, then forwards the result of this test to the assert function.
 	#
-	# param   string   description  A human-readable description for this
-	#                               assertion.
 	# param   mixed    left         The value for the left-hand side of the
 	#                               equality comparison.		
 	# param   mixed    right        The value for the left-hand side of the
 	#                               equality comparison.
+	# param   string   description  A human-readable description for this
+	#                               assertion.
 	# return  object                A reference to this class instance.
-	assertNotEqual: (description, left, right) ->
+	assertNotEquals: (left, right, description) ->
 		# Compare the left to the right and then forward the result of the test
 		# along with the human-readable description to the assert function
-		return @assert description, left isnt right
+		return @assertTrue left isnt right, description
 
 	# Sets the boolean class variable that indicates that this test is
 	# complete, then issues the "complete" notification to any observers.

@@ -19,7 +19,7 @@ class TestPublishSubscribe extends Tests
 		# Attempt to add the observer function to the channel-a topic
 		instance.subscribe "channel-a", (message) ->
 			# Assert that the message is the number 11
-			test.assertEqual "the message is 11", 11, message
+			test.assertEquals 11, message, "the message is 11"
 			# Mark this test as complete
 			test.complete()
 		# Attempt to trigger the observer function by issuing a notification in
@@ -42,14 +42,14 @@ class TestPublishSubscribe extends Tests
 			# Increment the counter
 			counter++
 			# Assert that the message is the same as the counter
-			test.assertEqual "the message is #{counter}", counter, message
+			test.assertEquals counter, message, "the message is #{counter}"
 			# Define the expected channel array
 			expectedChannels = ["channel-a", "channel-b", "channel-c"]
 			# Grab a shortcut reference to the current expected channel
 			expectedChannel = expectedChannels[counter - 1]
 			# Assert that the passed channel is the same as the expected channel
-			test.assertEqual "the channel is '#{expectedChannel}'", channel,
-				expectedChannel
+			test.assertEquals channel, expectedChannel,
+				"the channel is '#{expectedChannel}'"
 			# If this is the 3rd call, mark this test as complete
 			test.complete() if counter is 3
 		# Attempt to trigger the universal channel a total of 3 times using
@@ -68,15 +68,15 @@ class TestPublishSubscribe extends Tests
 		# Attempt to add an observer function to the channel-a topic
 		instance.subscribe "channel-a", (message) ->
 			# Assert that the message is the number 1
-			test.assertEqual "the message is 1", 1, message
+			test.assertEquals 1, message, "the message is 1"
 		# Attempt to add an observer function to the channel-b topic
 		instance.subscribe "channel-b", (message) ->
 			# Assert that the message is the number 2
-			test.assertEqual "the message is 2", 2, message
+			test.assertEquals 2, message, "the message is 2"
 		# Attempt to add an observer function to the channel-c topic
 		instance.subscribe "channel-c", (message) ->
 			# Assert that the message is the number 3
-			test.assertEqual "the message is 3", 3, message
+			test.assertEquals 3, message, "the message is 3"
 			# Mark this test as complete
 			test.complete()
 		# Attempt to trigger each of the individual observer functions, first

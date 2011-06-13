@@ -10,7 +10,7 @@ class TestDelayedTask extends Tests
 		# Define a new DelayedTask with a timeout of 1/4th of a second
 		task = new DelayedTask (value) ->
 			# Assert that the passed value is 70
-			test.assertEqual "the passed value is 70", 70, value
+			test.assertEquals 70, value, "the passed value is 70"
 			# Complete the test
 			test.complete()
 		, 250

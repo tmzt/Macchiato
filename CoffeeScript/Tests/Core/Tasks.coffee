@@ -15,9 +15,9 @@ class TestTasks extends Tests
 			# Define the second task
 			(taskControl, theNumber, theString) ->
 				# Assert that the passed number is 90
-				test.assertEqual "the number is 90", 90, theNumber
+				test.assertEquals 90, theNumber, "the number is 90"
 				# Assert that the passed string is the letter X
-				test.assertEqual "the string is X", "X", theString
+				test.assertEquals "X", theString, "the string is X"
 				# Create a simple DelayedTask to wait 1/4th of a second before
 				# moving on to the next Tasks function
 				simpleDelay = new DelayedTask ->
@@ -30,7 +30,7 @@ class TestTasks extends Tests
 			# Define the third task
 			(taskControl, differentString) ->
 				# Assert that the passed string is the letter X
-				test.assertEqual "the string is Y", "Y", differentString
+				test.assertEquals "Y", differentString, "the string is Y"
 				# Mark this test as complete
 				test.complete()
 		]
