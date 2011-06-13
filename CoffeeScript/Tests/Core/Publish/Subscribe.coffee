@@ -7,7 +7,7 @@ class TestPublishSubscribe extends Tests
 	createTestInstance: ->
 		# Create a new instance of the PublishSubscribe class, add 3 named
 		# topic queues to it, and return it
-		return new PublishSubscribe ["channel-a", "channel-b", "channel-c"]
+		return new PublishSubscribe "channel-a", "channel-b", "channel-c"
 
 	# Attempt to add a single observer to channel-a and then publish a single
 	# notification message to it.
