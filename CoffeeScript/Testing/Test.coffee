@@ -79,8 +79,8 @@ class Test extends PublishSubscribe
 	#
 	# param   boolean  subject      The subject of the assertion, either true or
 	#                               false.
-	# param   string   description  A human-readable description for this
-	#                               assertion.
+	# param   string   description  Optional. A human-readable description for
+	#                               this assertion. Defaults to an empty string.
 	# return  object                A reference to this class instance.
 	assertTrue: (subject, description = "") ->
 		# If the assertion is true
@@ -109,10 +109,10 @@ class Test extends PublishSubscribe
 	#
 	# param   boolean  subject      The subject of the assertion, either true or
 	#                               false.
-	# param   string   description  A human-readable description for this
-	#                               assertion.
+	# param   string   description  Optional. A human-readable description for
+	#                               this assertion. Defaults to an empty string.
 	# return  object                A reference to this class instance.
-	assertFalse: (subject, description) ->
+	assertFalse: (subject, description = "") ->
 		# Assert that the subject is false and return the result
 		return @assertTrue not subject, description
 
@@ -124,10 +124,10 @@ class Test extends PublishSubscribe
 	#                               equality comparison.		
 	# param   mixed    right        The value for the left-hand side of the
 	#                               equality comparison.
-	# param   string   description  A human-readable description for this
-	#                               assertion.
+	# param   string   description  Optional. A human-readable description for
+	#                               this assertion. Defaults to an empty string.
 	# return  object                A reference to this class instance.
-	assertEquals: (left, right, description) ->
+	assertEquals: (left, right, description = "") ->
 		# Compare the left to the right and then forward the result of the test
 		# along with the human-readable description to the assert function
 		return @assertTrue left is right, description
@@ -140,10 +140,10 @@ class Test extends PublishSubscribe
 	#                               equality comparison.		
 	# param   mixed    right        The value for the left-hand side of the
 	#                               equality comparison.
-	# param   string   description  A human-readable description for this
-	#                               assertion.
+	# param   string   description  Optional. A human-readable description for
+	#                               this assertion. Defaults to an empty string.
 	# return  object                A reference to this class instance.
-	assertNotEquals: (left, right, description) ->
+	assertNotEquals: (left, right, description = "") ->
 		# Compare the left to the right and then forward the result of the test
 		# along with the human-readable description to the assert function
 		return @assertTrue left isnt right, description
