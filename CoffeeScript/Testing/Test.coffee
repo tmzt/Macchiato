@@ -6,10 +6,10 @@
 # function is passed a single argument. This argument is the instance of the
 # Test class instance that is managing the test.
 #
-# From within the test function, the methods "assert", "assertEqual" and
-# "assertNotEqual" are used to make assertions. After all of the assertions have
-# been made, the method "complete" is used to indicate that the test is
-# finished.
+# From within the test, the methods "assertTrue", "assertFalse", and
+# "assertEquals" are used to make assertions. After all of the assertions have
+# been made, the method "complete" is used to indicate that the test has
+# finished running.
 class Test extends PublishSubscribe
 
 	# After calling the parent constructor, we register the topic channels for
@@ -131,22 +131,6 @@ class Test extends PublishSubscribe
 		# Compare the left to the right and then forward the result of the test
 		# along with the human-readable description to the assert function
 		return @assertTrue left is right, description
-
-	# Asserts that the value passed in for the left-hand side of the comparison
-	# is not equal to the value passed in for the right-hand side of the
-	# comparison, then forwards the result of this test to the assert function.
-	#
-	# param   mixed    left         The value for the left-hand side of the
-	#                               equality comparison.		
-	# param   mixed    right        The value for the left-hand side of the
-	#                               equality comparison.
-	# param   string   description  Optional. A human-readable description for
-	#                               this assertion. Defaults to an empty string.
-	# return  object                A reference to this class instance.
-	assertNotEquals: (left, right, description = "") ->
-		# Compare the left to the right and then forward the result of the test
-		# along with the human-readable description to the assert function
-		return @assertTrue left isnt right, description
 
 	# Sets the boolean class variable that indicates that this test is
 	# complete, then issues the "complete" notification to any observers.
