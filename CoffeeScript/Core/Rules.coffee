@@ -9,9 +9,14 @@
 # referenced by the Rule class instances during evaluation.
 class Rules extends PublishSubscribe
 
+	# Accepts any number of rules
+
 	# Evaluates a specific named decision-tree.
 	#
-	# 
+	# param   string  The name of the decision-tree to run.
+	# return  object  A reference to this class instance.
+	execute: (name) ->
+		# 
 
 # Expose this class to the parent scope
 Meta.expose "Rules", Rules
