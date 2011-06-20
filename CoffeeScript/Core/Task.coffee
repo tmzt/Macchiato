@@ -23,10 +23,6 @@ class Task extends PublishSubscribe
 	constructor: (@taskFunction, @runScope = @) ->
 		# Define the observable named topic channels for this class
 		super "run", "exception"
-		# Assign the passed task function to this object
-		# @taskFunction = taskFunction
-		# Assign the value of the optional runScope parameter to this object
-		# @runScope = runScope
 
 	# Runs the task function using the passed arguments.
 	#
