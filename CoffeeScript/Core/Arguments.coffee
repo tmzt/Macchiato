@@ -5,8 +5,8 @@
 class Arguments extends MacchiatoClass
 
 	# Accepts the a reference to a JavaScript arguments object or an array,
-	# and stores the array version of the passed arguments on this class instance
-	# for later use.
+	# and stores the array version of the passed arguments on this class
+	# instance for later use.
 	#
 	# param  object  argumentsObject  A JavaScript arguments object.
 	constructor: (argumentsObject) ->
