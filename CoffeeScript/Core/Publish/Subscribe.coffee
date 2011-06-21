@@ -41,8 +41,8 @@ class PublishSubscribe extends MacchiatoClass
 		# Return a reference to this class instance
 		return @
 
-	# Accepts an array of strings which should each be a named topic channel
-	# to be created.
+	# Accepts any number of string arguments, and creates named topic channels
+	# for each.
 	#
 	# param   string  ...  optional  Any number of arguments that we want to
 	#                                create named topic channels for.

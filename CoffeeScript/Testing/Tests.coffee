@@ -114,7 +114,7 @@ class Tests
 			# If the test had an exception
 			if exception
 				# Output the fact that this test threw an exception
-				console.log "#{testName}: Threw an exception"
+				console.log "#{testName}: Threw an exception: [#{reference}]"
 				# Increment the total number of failed tests
 				@failedTests++
 			# If the test was otherwise not successful

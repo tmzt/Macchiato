@@ -74,23 +74,6 @@ class Tasks extends MacchiatoClass
 		# Determine if the current task function exists or not
 		return @taskQueue[taskIndex]?
 
-	# Runs all of the tasks in the task queue.
-	#
-	# param   mixed   ...  Accepts any number of arguments which will be
-	#                      forwarded to each of the task methods.
-	# return  object       A reference to this class instance.
-	runAll: ->
-		# Create a new instance of the Arguments class to convert the arguments
-		# object into an array
-		taskArguments = (new Arguments(arguments)).toArray()
-		# Make a reference to this class instance the first argument that we
-		# pass into the task function
-		taskArguments.unshift @
-		# Loop over each of the tasks in the task queue and run them
-		task.callMethodArray "run", taskArguments for task in @taskQueue
-		# Return a reference to this class instance
-		return @
-
 	# Runs the current task in the task queue.
 	#
 	# param   mixed   ...  Accepts any number of arguments which will be

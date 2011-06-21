@@ -34,6 +34,8 @@ files =
 			"Repeated/Task.coffee"
 			"Tasks.coffee"
 			"Synchronizable.coffee"
+			"Rules.coffee"
+			"Rule.coffee"
 		]
 	"Client":
 		"command": "build:client"
@@ -67,6 +69,7 @@ files =
 			"Core/Publish/Subscribe.coffee"
 			"Core/Delayed/Task.coffee"
 			"Core/Tasks.coffee"
+			"Core/Rule.coffee"
 		]
 
 # Trims any whitespace off of the ends of the passed string value
