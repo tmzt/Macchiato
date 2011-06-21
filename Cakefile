@@ -91,6 +91,20 @@ erase = (filename) ->
 		# Unlink the file
 		fs.unlinkSync filename
 
+# Takes a string of text and wraps it in a JavaScript multiline comment block
+comment = (data) ->
+	# Break apart the string on newlines
+	lines = data.split '\n'
+	# Define an array for output lines, adding the first line for the comment
+	# block
+	output = ["/**"]
+	# Loop over each line adding the string for the comment block
+	output.push " * " + line for line in lines
+	# Add the last line of the comment block
+	output.push " */"
+	# Return the comment block string
+	return output.join('\n') + '\n'
+
 # Grab the library name, version, and tagline
 libraryName = trim read "NAME"
 libraryVersion = trim read "VERSION"
@@ -167,8 +181,10 @@ build = (packageName) ->
 	data = data.join "\n\n"
 	# Write out a temporary CoffeeScript file which contains all of the data
 	write "#{libraryName}.coffee", data
+	# Start the JavaScript output file with a commented copy of the license
+	write "JavaScript/#{libraryName}.js", comment read "LICENSE"
 	# Determine what the CoffeeScript compile command needs to be
-	command = "coffee -pc #{libraryName}.coffee > JavaScript/#{libraryName}.js"
+	command = "coffee -pc #{libraryName}.coffee >> JavaScript/#{libraryName}.js"
 	# State that we are compiling the CoffeeScript file
 	echo "Compiling #{packageName}."
 	# Execute the CoffeeScript compiler on the temporary file
