@@ -98,8 +98,14 @@ comment = (data) ->
 	# Define an array for output lines, adding the first line for the comment
 	# block
 	output = ["/**"]
-	# Loop over each line adding the string for the comment block
-	output.push " * " + line for line in lines
+	# Loop over each line
+	for line, index in lines
+		# If this is the last line and it is an empty string
+		if index is lines.length - 1 and line is ""
+			# Move on to the next line
+			continue
+		# Add the comment block to the start of the line
+		output.push " * " + line
 	# Add the last line of the comment block
 	output.push " */"
 	# Join the output array back together to create an output string
