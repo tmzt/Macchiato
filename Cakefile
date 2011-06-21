@@ -102,8 +102,10 @@ comment = (data) ->
 	output.push " * " + line for line in lines
 	# Add the last line of the comment block
 	output.push " */"
-	# Return the comment block string
-	return output.join('\n') + '\n'
+	# Join the output array back together to create an output string
+	output = output.join "\n"
+	# Return the finished comment block string, plus a newline at the end
+	return output + "\n"
 
 # Grab the library name, version, and tagline
 libraryName = trim read "NAME"
