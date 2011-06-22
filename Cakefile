@@ -11,7 +11,7 @@ files =
 	"All":
 		"command": "build"
 		"description": "Builds the complete library, excluding unit tests."
-		"dependencies": ["Client", "Server", "Testing"]
+		"dependencies": ["Client", "Server", "Rules", "Testing"]
 	"All-Minimized":
 		"minimize": true
 		"command": "build:minimized"
@@ -34,23 +34,30 @@ files =
 			"Repeated/Task.coffee"
 			"Tasks.coffee"
 			"Synchronizable.coffee"
+		]
+	"Rules":
+		"command": "build:rules"
+		"description": "Builds the core components and the rules engine."
+		"dependencies": ["Core"]
+		"files": [
+			"Condition.coffee"
+			"Reg/Exp/Condition.coffee"
 			"Rules.coffee"
-			"Rule.coffee"
 		]
 	"Client":
 		"command": "build:client"
 		"description": "Includes code relevant to client-side development."
-		"dependencies": ["Core"]
+		"dependencies": ["Core", "Rules"]
 		"files": [
 			"HTML/Element.coffee"
 		]
 	"Server":
 		"command": "build:server"
 		"description": "Includes code relevant to server-side development in Node.js."
-		"dependencies": ["Core"]
+		"dependencies": ["Core", "Rules"]
 	"Testing":
 		"private": true
-		"dependencies": ["Client", "Server"]
+		"dependencies": ["Client", "Server", "Rules"]
 		"files": [
 			"Meta.coffee"
 			"Assertion.coffee"
