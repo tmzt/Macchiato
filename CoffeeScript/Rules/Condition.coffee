@@ -1,11 +1,11 @@
-# This file defines the Evaluator class, and exposes it to the outside world.
+# This file defines the Condition class, and exposes it to the outside world.
 #
-# Any number of evaluators can be created by extending this class and extending
-# nothing except the "evaluate" function.
-class Evaluator extends PublishSubscribe
+# Any number of different condition evaluators can be created by extending this
+# class and replacing the "evaluate" function.
+class Condition extends PublishSubscribe
 
-	# Sets up the passed rule type, rule evaluator, and data source as
-	# variables on this class instance.
+	# Sets up the named topic channels and grabs a reference to the passed data
+	# source object.
 	#
 	# param  object  An instance of one of the rule data source classes.
 	constructor: (@dataSource) ->
@@ -31,7 +31,7 @@ class Evaluator extends PublishSubscribe
 		# This placeholder function always returns true
 		return true
  
-	# Evaluates the data retrieved from the data source.
+	# Attempts to load and evaluate the data retrieved from the data source.
 	#
 	# return  object  A reference to this class instance.
 	execute: ->
@@ -41,4 +41,4 @@ class Evaluator extends PublishSubscribe
 		return @
 
 # Expose this class to the parent scope
-Meta.expose "Evaluator", Evaluator
+Meta.expose "Condition", Condition

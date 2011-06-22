@@ -1,13 +1,13 @@
-# This file defines the RegExpEvaluator class, and exposes it to the
+# This file defines the RegExpCondition class, and exposes it to the
 # outside world.
-class RegExpEvaluator extends Evaluator
+class RegExpCondition extends Condition
 
-	# Sets up the required class variables and named topic channels.
+	# Sets up the required class variables.
 	#
 	# param  object  A reference to the regular expression to match.
 	# param  object  A reference to one of the data source classes.
 	constructor: (@regexp, dataSource) ->
-		# Set up the named topic channels that this class can publish
+		# Set up the data source
 		super dataSource
 
 	# Evaluates the passed data against the regular expression stored on this
@@ -25,4 +25,4 @@ class RegExpEvaluator extends Evaluator
 		return false
 
 # Expose this class to the parent scope
-Meta.expose "RegExpEvaluator", RegExpEvaluator
+Meta.expose "RegExpCondition", RegExpCondition
