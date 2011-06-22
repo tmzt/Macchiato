@@ -40,7 +40,7 @@ class DataSource extends PublishSubscribe
 				# passing in the task control object. We trust that "loadData"
 				# will call the "next" function on the passed task control
 				# object after it has finished retrieving the data
-				@load taskControl
+				@retrieve taskControl
 			# The third step
 			(taskControl, data) =>
 				# Issue the "complete" notification, passing in the data

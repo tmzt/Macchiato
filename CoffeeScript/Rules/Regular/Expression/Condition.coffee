@@ -1,6 +1,6 @@
-# This file defines the RegExpCondition class, and exposes it to the
+# This file defines the RegularExpressionCondition class, and exposes it to the
 # outside world.
-class RegExpCondition extends Condition
+class RegularExpressionCondition extends Condition
 
 	# Sets up the required class variables.
 	#
@@ -16,13 +16,9 @@ class RegExpCondition extends Condition
 	# param   mixed  The data loaded from the data source.
 	# return  bool   If the evaluation succeeds or not.
 	evaluate: (data) ->
-		# If the regular expression matches the passed data
-		if @regexp.match data isnt null
-			# The regular expression matched
-			return true
-		# If we made it down here, that means the regular expression did not
-		# match the passed data
-		return false
+		# Evaluate the passed data against the regular expression and return
+		# the result
+		return @regexp.test data
 
 # Expose this class to the parent scope
-Meta.expose "RegExpCondition", RegExpCondition
+Meta.expose "RegularExpressionCondition", RegularExpressionCondition

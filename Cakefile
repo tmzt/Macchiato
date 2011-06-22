@@ -33,6 +33,8 @@ files =
 			"Debounced/Task.coffee"
 			"Repeated/Task.coffee"
 			"Tasks.coffee"
+			"Data/Source.coffee"
+			"Simple/Data/Source.coffee"
 			"Synchronizable.coffee"
 		]
 	"Rules":
@@ -41,7 +43,7 @@ files =
 		"dependencies": ["Core"]
 		"files": [
 			"Condition.coffee"
-			"Reg/Exp/Condition.coffee"
+			"Regular/Expression/Condition.coffee"
 			"Rules.coffee"
 		]
 	"Client":
@@ -76,7 +78,7 @@ files =
 			"Core/Publish/Subscribe.coffee"
 			"Core/Delayed/Task.coffee"
 			"Core/Tasks.coffee"
-			"Core/Rule.coffee"
+			"Rules/Regular/Expression/Condition.coffee"
 		]
 
 # Trims any whitespace off of the ends of the passed string value

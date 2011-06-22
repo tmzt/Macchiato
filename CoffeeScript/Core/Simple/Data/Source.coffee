@@ -1,6 +1,6 @@
 # This file defines the SimpleDataSource class, and exposes it to the outside
 # world.
-class SimpleDataSource extends PublishSubscribe
+class SimpleDataSource extends DataSource
 
 	# Sets up the required class variables and named topic channels.
 	#

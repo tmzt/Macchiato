@@ -15,7 +15,7 @@ class Condition extends PublishSubscribe
 		# data source class instance
 		@dataSource.addObserver "complete", (unused, data) =>
 			# If the evaluate function returns boolean true for the passed data
-			if @evaluate data is true
+			if @evaluate data
 				# Issue a notification on the "success" topic channel
 				@notifyObservers "success", @
 			# Otherwise

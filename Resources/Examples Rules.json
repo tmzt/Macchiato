@@ -1,0 +1,30 @@
+{
+	"version": "1.0",
+	"description": "Example Rules JSON",
+	"data_sources": {
+		"Cart Total": {
+			"type": "simple",
+			"data": "Hello World!"
+		}
+	},
+	"conditions": {
+		"Shopping Cart over $400.00": {
+			"type": "gt",
+			"data_source": "Cart Total"
+			"value": 400
+		}
+	},
+	"actions": {
+		"Click to Call": {
+			"type": "custom",
+			""
+		}
+	},
+	"rules": {
+		"pageload": [
+			{
+				"type": "condition"
+			}
+		]
+	}
+}
