@@ -1,6 +1,6 @@
-# This file defines the SimpleRuleDataSource class, and exposes it to the
-# outside world.
-class SimpleRuleDataSource extends PublishSubscribe
+# This file defines the SimpleDataSource class, and exposes it to the outside
+# world.
+class SimpleDataSource extends PublishSubscribe
 
 	# Sets up the required class variables and named topic channels.
 	#
@@ -21,4 +21,4 @@ class SimpleRuleDataSource extends PublishSubscribe
 		return @
 
 # Expose this class to the parent scope
-Meta.expose "SimpleRuleDataSource", SimpleRuleDataSource
+Meta.expose "SimpleDataSource", SimpleDataSource

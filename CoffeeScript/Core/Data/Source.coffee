@@ -1,9 +1,9 @@
 # This file defines the base DataSource class, and exposes it to the outside
 # world.
 #
-# Any number of data sources (including ones that require asynchronous remote
-# requests) can be created by extending this class and extending nothing except
-# the "retrieve" function.
+# Any conceptual data source, including data sources that require asynchronous
+# remote requests, can be created by extending this class and replacing the
+# "retrieve" function.
 class DataSource extends PublishSubscribe
 
 	# Sets up the named topic channels this class can publish.
