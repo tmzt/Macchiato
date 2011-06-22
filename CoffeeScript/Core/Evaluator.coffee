@@ -10,18 +10,18 @@ class Evaluator extends PublishSubscribe
 	# param  object  An instance of one of the rule data source classes.
 	constructor: (@dataSource) ->
 		# Set up the named topic channels that this class can publish
-		super "pass", "fail"
+		super "success", "failure"
 		# Set up an observer for the "complete" topic channel on the passed
 		# data source class instance
 		@dataSource.addObserver "complete", (unused, data) =>
 			# If the evaluate function returns boolean true for the passed data
 			if @evaluate data is true
-				# Issue a notification on the "pass" topic channel
-				@notifyObservers "pass", @
+				# Issue a notification on the "success" topic channel
+				@notifyObservers "success", @
 			# Otherwise
 			else
-				# Issue a notification on the "fail" topic channel
-				@notifyObservers "fail", @
+				# Issue a notification on the "failure" topic channel
+				@notifyObservers "failure", @
 
 	# Placeholder function for child classes to replace.
 	#

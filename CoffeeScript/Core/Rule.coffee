@@ -12,8 +12,7 @@ class Rule extends PublishSubscribe
 	# variables on this class instance.
 	#
 	# param  object  An instance of one of the rule evaluator classes.
-	# param  object  An instance of one of the rule data source classes.
-	constructor: (@evaluator, @dataSource) ->
+	constructor: (@evaluator) ->
 		# Set up the named topic channels that this class can publish
 		super "pass", "fail"
 

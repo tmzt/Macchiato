@@ -1,6 +1,6 @@
-# This file defines the RegExpRuleEvaluator class, and exposes it to the
+# This file defines the RegExpEvaluator class, and exposes it to the
 # outside world.
-class RegExpRuleEvaluator extends RuleEvaluator
+class RegExpEvaluator extends Evaluator
 
 	# Sets up the required class variables and named topic channels.
 	#
@@ -25,4 +25,4 @@ class RegExpRuleEvaluator extends RuleEvaluator
 		return false
 
 # Expose this class to the parent scope
-Meta.expose "RegExpRuleEvaluator", RegExpRuleEvaluator
+Meta.expose "RegExpEvaluator", RegExpEvaluator
