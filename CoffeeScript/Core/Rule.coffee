@@ -14,7 +14,8 @@ class Rule extends PublishSubscribe
 	# param  object  An instance of one of the rule evaluator classes.
 	constructor: (@evaluator) ->
 		# Set up the named topic channels that this class can publish
-		super "pass", "fail"
+		super "success", "failure"
+		# Attach 
 
 	# Evaluates this rule, then using the result of the evaluation either
 	# issues a "pass" or "fail" notification.
@@ -22,7 +23,7 @@ class Rule extends PublishSubscribe
 	# return  object  A reference to this class instance.
 	evaluate: ->
 		# If the result of the evaluation is boolean true
-		if @evaluator.evaluate @dataSource is true
+		if @evaluator.execute() is true
 			# Issue a notification on the "pass" topic channel
 			@notifyObservers "pass", @
 		# Otherwise
