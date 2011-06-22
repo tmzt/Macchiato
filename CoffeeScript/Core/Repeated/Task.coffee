@@ -16,7 +16,7 @@ class RepeatedTask extends TimerTask
 	#                                          function at. Defaults to @.
 	constructor: (taskFunction, interval = 1, runScope = @) ->
 		# Invoke the parent constructor
-		super taskFunction, setInterval, interval, runScope
+		super taskFunction, "interval", interval, runScope
 		# Set the instance variables to their initial state
 		@reset()
 

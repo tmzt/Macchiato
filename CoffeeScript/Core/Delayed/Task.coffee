@@ -16,7 +16,7 @@ class DelayedTask extends TimerTask
 	#                                          function at. Defaults to @.
 	constructor: (taskFunction, delay = 1, runScope = @) ->
 		# Invoke the parent constructor
-		super taskFunction, setTimeout, delay, runScope
+		super taskFunction, "timeout", delay, runScope
 		# Set the instance variables to their initial state
 		@reset()
 

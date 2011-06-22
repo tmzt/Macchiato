@@ -9,19 +9,16 @@ class TimerTask extends Task
 	# object.
 	#
 	# param  function  taskFunction            The task function itself.
-	# param  object    timer         optional  The timer function to use,
-	#                                          either setTimeout or
-	#                                          setInterval. Defaults to
-	#                                          setTimeout.
+	# param  object    timer         string    The timer type to use. Can be
+	#                                          "timeout" or "interval".
+	#                                          Defaults to "timeout".
 	# param  integer   interval      optional  The length of the interval, in
 	#                                          milliseconds. Defaults to 1.
 	# param  object    runScope      optional  The scope to run the task
 	#                                          function at. Defaults to @.
-	constructor: (taskFunction, timer = null, interval = 1, runScope = @) ->
+	constructor: (taskFunction, timer = "timeout", interval = 1, runScope = @) ->
 		# Invoke the parent constructor
 		super taskFunction, runScope
-		# If timer is null, default it to setTimeout
-		timer = setTimeout if timer is null
 		# Store the the desired timer
 		@timer = timer
 		# Store the desired interval
@@ -47,11 +44,11 @@ class TimerTask extends Task
 	cancel: ->
 		# If we have a timer that we can cancel
 		if @timerReference isnt null
-			# If the timer is setTimeout
-			if @timer is setTimeout 
+			# If the timer is a "timeout" timer
+			if @timer is "timeout" 
 				# Clear the timeout if it has not already run
 				clearTimeout @timerReference if @timerExecuted is no
-			else if @timer is setInterval
+			else if @timer is "interval"
 				# Clear the interval
 				clearInterval @timerReference
 		# Reset the class state back to the initial values
@@ -68,8 +65,8 @@ class TimerTask extends Task
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
 		taskArguments = (new Arguments(arguments)).toArray()
-		# Store a reference to the timer
-		@timerReference = @timer =>
+		# Define the wrapper function to pass to the JavaScript timer
+		wrapperFunction = =>
 			# Notify any observers attached to the "run" channel
 			@notifyObservers "run", @
 			# Inform the class that this timer function has been run
@@ -82,7 +79,13 @@ class TimerTask extends Task
 			catch exception
 				# Notify any observers attached to the "exception" channel
 				@notifyObservers "exception", @, exception
-		# Forward the desired interval to the timer function
-		, @interval
+		# If the desired timer type is "timeout"
+		if @timer is "timeout"
+			# Set up a JavaScript setTimeout timer
+			@timerReference = setTimeout wrapperFunction, @interval
+		# If the timer should be an "interval" timer
+		else if @timer is "interval"
+			# Set up a JavaScript setInterval timer
+			@timerReference = setInterval wrapperFunction, @interval
 		# Return a reference to this class instance
 		return @
