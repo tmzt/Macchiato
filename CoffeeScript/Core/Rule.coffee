@@ -2,78 +2,34 @@
 #
 # An instance of the Rule class manages the evaluation of a single condition or
 # action.
+#
+# Rule extends the PublishSubscribe class, and publishes notifications into
+# either the "pass" or "fail" named topic channels based on the result of the
+# evaluator.
 class Rule extends PublishSubscribe
 
 	# Sets up the passed rule type, rule evaluator, and data source as
 	# variables on this class instance.
 	#
-	# param  string  The type of rule. Can currently be "regex", "string" or
-	#                "function".
-	# param  
-	constructor: (@type, @evaluator, @data) ->
-		# Set up a task queue for the success case
-		@passTasks = new Tasks
-		# Set up a task queue for the failure case
-		@failTasks = new Tasks
+	# param  object  An instance of one of the rule evaluator classes.
+	# param  object  An instance of one of the rule data source classes.
+	constructor: (@evaluator, @dataSource) ->
+		# Set up the named topic channels that this class can publish
+		super "pass", "fail"
 
-	# Adds a single task function to the pass task queue.
-	#
-	# param   function  taskFunction  A single task function to add to the
-	#                                 queue.
-	# return  object                  A reference to this class instance.
-	addPassTask: (taskFunction) ->
-		# Adds a task to the task queue
-		@passTasks.add taskFunction
-		# Return a reference to this class instance
-		return @
-
-	# Adds a single task function to the fail task queue.
-	#
-	# param   function  taskFunction  A single task function to add to the
-	#                                 queue.
-	# return  object                  A reference to this class instance.
-	addFailTask: (taskFunction) ->
-		# Adds a task to the task queue
-		@passTasks.add taskFunction
-		# Return a reference to this class instance
-		return @
-
-	# Evaluates this rule.
+	# Evaluates this rule, then using the result of the evaluation either
+	# issues a "pass" or "fail" notification.
 	#
 	# return  object  A reference to this class instance.
 	evaluate: ->
-		# If we are evaluating a regular expression
-		if @type is "regex"
-			# Attempt to match using the regular expression evaluator
-			@evaluator.match @data
-		# If we are evaluating a simple string
-		else if @type is "string"
-			
-		# If we are evaluating the result of a function
-		else if @type is "function"
-			# Define the two-stage evaluation tasks object to allow for
-			# asynchronous rule processing
-			evaluationTasks = new Tasks [
-				# The first task is to do the evaluation
-				(evaluationTaskControl) =>
-					# Run the evaluation function, passing in the tasks object
-					# and capturing the result
-					evaluationResult = @evaluator evaluationTaskControl
-					# If the function returned boolean true, we assume we are
-					# being used for synchronous processing, so we move on to
-					# complete the task right here
-					evaluationTaskControl.next true if evaluationResult is true
-				(evaluationTaskControl, evaluationResult) =>
-					# If the evaluation result is true
-					if evaluationResult is true
-						# Run all of the pass task functions
-						@passTasks.runAll()
-					else
-						# Run all of the fail task functions
-						@failTasks.runAll()
-			]
-			# Run the evaluation tasks
-			evaluationTasks.run()
+		# If the result of the evaluation is boolean true
+		if @evaluator.evaluate @dataSource is true
+			# Issue a notification on the "pass" topic channel
+			@notifyObservers "pass", @
+		# Otherwise
+		else
+			# Issue a notification on the "fail" topic channel
+			@notifyObservers "fail", @
 		# Return a reference to this class instance
 		return @
 

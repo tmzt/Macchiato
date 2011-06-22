@@ -1,4 +1,4 @@
-# This file defines the TimerTask class.
+# This file defines the TimerTask class, which is not exposed.
 #
 # TimerTask delegates the actual running of the task function to one of the two
 # available native JavaScript timer metaphors, either setTimeout or
