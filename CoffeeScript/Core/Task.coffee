@@ -32,7 +32,7 @@ class Task extends PublishSubscribe
 	run: ->
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
-		taskArguments = (new Arguments(arguments)).toArray()
+		taskArguments = Arguments.convertToArray arguments
 		# Notify any observers attached to the "run" channel
 		@notifyObservers "run", @
 		# Wrap this run attempt in a try/catch so we can capture exceptions

@@ -26,7 +26,7 @@ class PublishSubscribe extends MacchiatoClass
 		@namedChannels = {}
 		# Grab any arguments that may have been passed in and convert them to a
 		# simple array of argument values which are named topic channels
-		names = (new Arguments(arguments)).toArray()
+		names = Arguments.convertToArray arguments
 		# If any named topic channels were passed in, create them
 		@callMethodArray "addChannels", names if names.length > 0
 
@@ -50,7 +50,7 @@ class PublishSubscribe extends MacchiatoClass
 	addChannels: ->
 		# Grab any arguments that may have been passed in and convert them to a
 		# simple array of argument values which are named topic channels
-		names = (new Arguments(arguments)).toArray()
+		names = Arguments.convertToArray arguments
 		# If we have topic channel names to add, add them
 		@addChannel name for name in names if names.length > 0
 		# Return a reference to this class instance
@@ -102,7 +102,7 @@ class PublishSubscribe extends MacchiatoClass
 	notifyObservers: (name) ->
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
-		notificationArguments = (new Arguments(arguments)).toArray()
+		notificationArguments = Arguments.convertToArray arguments
 		# If the channel name that was passed in is not for the universal channel
 		if name isnt "*" and @namedChannels[name]?
 			# The arguments that we will forward to the named topic channel are
@@ -122,7 +122,7 @@ class PublishSubscribe extends MacchiatoClass
 	publish: ->
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
-		notificationArguments = (new Arguments(arguments)).toArray()
+		notificationArguments = Arguments.convertToArray arguments
 		# Return the result of the notifyObservers method, passing the same
 		# arguments
 		return @callMethodArray "notifyObservers", notificationArguments

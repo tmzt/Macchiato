@@ -40,7 +40,7 @@ class Observable extends MacchiatoClass
 			return @
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
-		observerArguments = (new Arguments(arguments)).toArray()
+		observerArguments = Arguments.convertToArray arguments
 		# Notify all of the observer functions in the observers collection
 		observer.apply @, observerArguments for observer in @observers
 		# Return a reference to this class instance
@@ -50,7 +50,7 @@ class Observable extends MacchiatoClass
 	publish: ->
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
-		observerArguments = (new Arguments(arguments)).toArray()
+		observerArguments = Arguments.convertToArray arguments
 		# Return the result of the notifyObservers method, passing the same
 		# argument values that were passed in
 		return @callMethodArray "notifyObservers", observerArguments

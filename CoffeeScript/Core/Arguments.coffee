@@ -20,5 +20,11 @@ class Arguments extends MacchiatoClass
 		# Return a reference to the arguments array
 		return @argumentsArray
 
+# Simple argument copy method
+Arguments.convertToArray = (argumentsObject) ->
+	# Create a new instance of the Arguments class, passing it the arguments
+	# object
+	return (new Arguments(argumentsObject)).toArray()
+
 # Expose this class to the parent scope
 Macchiato.expose "Arguments", Arguments

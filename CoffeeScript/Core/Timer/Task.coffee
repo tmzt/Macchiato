@@ -64,7 +64,7 @@ class TimerTask extends Task
 	run: ->
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
-		taskArguments = (new Arguments(arguments)).toArray()
+		taskArguments = Arguments.convertToArray arguments
 		# Define the wrapper function to pass to the JavaScript timer
 		wrapperFunction = =>
 			# Notify any observers attached to the "run" channel

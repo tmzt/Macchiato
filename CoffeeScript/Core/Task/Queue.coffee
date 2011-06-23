@@ -48,7 +48,7 @@ class Tasks extends MacchiatoClass
 		@currentTask++
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
-		taskArguments = (new Arguments(arguments)).toArray()
+		taskArguments = Arguments.convertToArray arguments
 		# Run the current task, forwarding the arguments that were passed in
 		return @callMethodArray "run", taskArguments
 
@@ -62,7 +62,7 @@ class Tasks extends MacchiatoClass
 		@currentTask--
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
-		taskArguments = (new Arguments(arguments)).toArray()
+		taskArguments = Arguments.convertToArray arguments
 		# Run the current task, forwarding the arguments that were passed in
 		return @callMethodArray "run", taskArguments
 
@@ -82,7 +82,7 @@ class Tasks extends MacchiatoClass
 	run: ->
 		# Create a new instance of the Arguments class to convert the arguments
 		# object into an array
-		taskArguments = (new Arguments(arguments)).toArray()
+		taskArguments = Arguments.convertToArray arguments
 		# Make a reference to this class instance the first argument that we
 		# pass into the task function
 		taskArguments.unshift @
