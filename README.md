@@ -9,16 +9,16 @@ happens to be written in [CoffeeScript][homepage-coffeescript].
 If you have Node.js and CoffeeScript installed, chances are you have Cake - the
 CoffeeScript build tool. If so, you should be able to run:
 
-	# Change into the base Macchiato project directory
-	cd /somewhere/on/your/disk/Macchiato
-	# Use the Cake utility to build the project
-	cake build
+    # Change into the base Macchiato project directory
+    cd /somewhere/on/your/disk/Macchiato
+    # Use the Cake utility to build the project
+    cake build
 
 Cake should display some text on the screen that looks something like:
 
-	Macchiato - The CoffeeScript toolkit.
-	Building the complete Macchiato library...
-	Done.
+    Macchiato - The CoffeeScript toolkit.
+    Building the complete Macchiato library...
+    Done.
 
 The finished library file will be inside of the Macchiato/JavaScript directory,
 and should be named "Macchiato.js".
