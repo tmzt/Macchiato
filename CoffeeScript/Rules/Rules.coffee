@@ -9,13 +9,13 @@
 # referenced by the Rule class instances during evaluation.
 class Rules extends PublishSubscribe
 
-	# Evaluates a specific named decision-tree.
-	#
-	# param   string  The name of the decision-tree to run.
-	# return  object  A reference to this class instance.
-	evaluate: (name) ->
-		# Return a reference to this class instance
-		return @
+    # Evaluates a specific named decision-tree.
+    #
+    # param   string  The name of the decision-tree to run.
+    # return  object  A reference to this class instance.
+    evaluate: (name) ->
+        # Return a reference to this class instance
+        return @
 
 # Expose this class to the parent scope
 Macchiato.expose "Rules", Rules

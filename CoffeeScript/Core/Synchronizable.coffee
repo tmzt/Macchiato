@@ -2,8 +2,8 @@
 # world.
 class Synchronizable
 
-	# Does stuff.
-	constructor: ->
+    # Does stuff.
+    constructor: ->
 
 # Expose this class to the parent scope
 Macchiato.expose "Synchronizable", Synchronizable

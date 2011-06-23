@@ -3,9 +3,9 @@
 # or AssertionFailure should be used.
 class Assertion extends MacchiatoClass
 
-	# Accepts the description string and attaches it to this class instance.
-	#
-	# param  string  description  The description for this assertion.
-	constructor: (description) ->
-		# Assign the description to a class variable
-		@description = description
+    # Accepts the description string and attaches it to this class instance.
+    #
+    # param  string  description  The description for this assertion.
+    constructor: (description) ->
+        # Assign the description to a class variable
+        @description = description

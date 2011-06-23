@@ -5,10 +5,10 @@
 # actually manipulated or queried.
 class HTMLElement extends PublishSubscribe
 
-	# Calls the parent constructor.
-	constructor: ->
-		# Invoke the parent constructor
-		super()
+    # Calls the parent constructor.
+    constructor: ->
+        # Invoke the parent constructor
+        super()
 
 # Expose this class to the parent scope
 Macchiato.expose "HTMLElement", HTMLElement
