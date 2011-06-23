@@ -16,7 +16,6 @@ class Macchiato
 	#                            will be exposed.
 	# return  object             A reference to this class instance.
 	expose: (name, reference) ->
-		console.log name
 		# Add the passed name and reference to the exposed references
 		# collection
 		@exposed[name] = reference
