@@ -4,5 +4,5 @@ Macchiato.test = (name, reference) ->
 	instance = new reference name
 	# Execute the tests
 	instance.run()
-	# Return a reference to the Meta object
+	# Return a reference to this class instance
 	return @
