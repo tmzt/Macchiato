@@ -61,7 +61,7 @@ files =
 		"private": true
 		"dependencies": ["Client", "Server", "Rules"]
 		"files": [
-			"Meta.coffee"
+			"Macchiato.coffee"
 			"Assertion.coffee"
 			"Assertion/Success.coffee"
 			"Assertion/Failure.coffee"
