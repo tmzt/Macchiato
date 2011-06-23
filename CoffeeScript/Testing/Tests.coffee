@@ -128,4 +128,4 @@ class Tests
 				@successfulTests++
 
 # Expose this class to the parent scope
-Meta.expose "Tests", Tests
+Macchiato.expose "Tests", Tests

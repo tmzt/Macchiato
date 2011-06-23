@@ -6,4 +6,4 @@ class Synchronizable
 	constructor: ->
 
 # Expose this class to the parent scope
-Meta.expose "Synchronizable", Synchronizable
+Macchiato.expose "Synchronizable", Synchronizable

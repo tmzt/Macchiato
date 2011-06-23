@@ -42,4 +42,4 @@ class DebouncedTask extends DelayedTask
 		return @
 
 # Expose this class to the parent scope
-Meta.expose "DebouncedTask", DebouncedTask
+Macchiato.expose "DebouncedTask", DebouncedTask

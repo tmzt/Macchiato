@@ -52,4 +52,4 @@ class DataSource extends PublishSubscribe
 		return @
 
 # Expose this class to the parent scope
-Meta.expose "DataSource", DataSource
+Macchiato.expose "DataSource", DataSource

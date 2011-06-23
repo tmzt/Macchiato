@@ -21,4 +21,4 @@ class Arguments extends MacchiatoClass
 		return @argumentsArray
 
 # Expose this class to the parent scope
-Meta.expose "Arguments", Arguments
+Macchiato.expose "Arguments", Arguments

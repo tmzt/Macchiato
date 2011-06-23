@@ -11,4 +11,4 @@ class HTMLElement extends PublishSubscribe
 		super()
 
 # Expose this class to the parent scope
-Meta.expose "HTMLElement", HTMLElement
+Macchiato.expose "HTMLElement", HTMLElement

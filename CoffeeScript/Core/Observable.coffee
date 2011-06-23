@@ -56,4 +56,4 @@ class Observable extends MacchiatoClass
 		return @callMethodArray "notifyObservers", observerArguments
 
 # Expose this class to the parent scope
-Meta.expose "Observable", Observable
+Macchiato.expose "Observable", Observable

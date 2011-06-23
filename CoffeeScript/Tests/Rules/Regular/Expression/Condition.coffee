@@ -13,6 +13,7 @@ class TestRegularExpressionCondition extends Tests
 		condition = new RegularExpressionCondition /^Hello/g, dataSource
 		# Add an observer to the universal topic channel
 		condition.addObserver "*", (channel) ->
+			console.log 'hi'
 			# Assert that the passed channel name is "success"
 			test.assertEquals channel, "success", "channel is 'success'"
 			# Mark this test as complete
@@ -21,4 +22,4 @@ class TestRegularExpressionCondition extends Tests
 		condition.execute()
 
 # Add this test class to the tests collection
-Meta.test "TestRegularExpressionCondition", TestRegularExpressionCondition
+Macchiato.test "TestRegularExpressionCondition", TestRegularExpressionCondition

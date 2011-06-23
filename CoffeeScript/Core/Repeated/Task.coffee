@@ -21,4 +21,4 @@ class RepeatedTask extends TimerTask
 		@reset()
 
 # Expose this class to the parent scope
-Meta.expose "RepeatedTask", RepeatedTask
+Macchiato.expose "RepeatedTask", RepeatedTask

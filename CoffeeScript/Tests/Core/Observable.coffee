@@ -18,4 +18,4 @@ class TestObservable extends Tests
 		observable.publish "T"
 
 # Add this test class to the tests collection
-Meta.test "TestObservable", TestObservable
+Macchiato.test "TestObservable", TestObservable

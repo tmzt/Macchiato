@@ -21,4 +21,4 @@ class RegularExpressionCondition extends Condition
 		return @regexp.test data
 
 # Expose this class to the parent scope
-Meta.expose "RegularExpressionCondition", RegularExpressionCondition
+Macchiato.expose "RegularExpressionCondition", RegularExpressionCondition

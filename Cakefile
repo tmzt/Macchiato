@@ -21,7 +21,7 @@ files =
 		"command": "build:core"
 		"description": "Builds only the core components of the library."
 		"files": [
-			"Meta.coffee"
+			"Macchiato.coffee"
 			"Macchiato/Class.coffee"
 			"Arguments.coffee"
 			"Observable.coffee"

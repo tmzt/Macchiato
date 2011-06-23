@@ -21,4 +21,4 @@ class DelayedTask extends TimerTask
 		@reset()
 
 # Expose this class to the parent scope
-Meta.expose "DelayedTask", DelayedTask
+Macchiato.expose "DelayedTask", DelayedTask

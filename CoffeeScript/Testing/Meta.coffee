@@ -1,4 +1,4 @@
-Meta.test = (name, reference) ->
+Macchiato.test = (name, reference) ->
 	# Create a new instance of the passed Tests class reference, passing it
 	# the name of the test suite it represents
 	instance = new reference name

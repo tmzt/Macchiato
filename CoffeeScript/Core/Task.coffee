@@ -47,4 +47,4 @@ class Task extends PublishSubscribe
 		return @
 
 # Expose this class to the parent scope
-Meta.expose "Task", Task
+Macchiato.expose "Task", Task

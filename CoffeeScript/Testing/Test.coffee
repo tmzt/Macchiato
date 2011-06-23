@@ -149,4 +149,4 @@ class Test extends PublishSubscribe
 		return @
 
 # Expose this class to the parent scope
-Meta.expose "Test", Test
+Macchiato.expose "Test", Test

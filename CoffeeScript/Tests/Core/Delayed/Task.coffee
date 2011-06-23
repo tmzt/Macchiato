@@ -18,4 +18,4 @@ class TestDelayedTask extends Tests
 		task.run 70
 
 # Add this test class to the tests collection
-Meta.test "TestDelayedTask", TestDelayedTask
+Macchiato.test "TestDelayedTask", TestDelayedTask

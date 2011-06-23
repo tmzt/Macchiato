@@ -38,4 +38,4 @@ class TestTasks extends Tests
 		tasks.run()
 
 # Add this test class to the tests collection
-Meta.test "TestTasks", TestTasks
+Macchiato.test "TestTasks", TestTasks

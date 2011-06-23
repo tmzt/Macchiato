@@ -17,4 +17,4 @@ class MacchiatoClass
 		@[name].apply @, argumentsArray
 
 # Expose this class to the parent scope
-Meta.expose "MacchiatoClass", MacchiatoClass
+Macchiato.expose "MacchiatoClass", MacchiatoClass

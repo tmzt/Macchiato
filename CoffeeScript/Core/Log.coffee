@@ -66,4 +66,4 @@ class Log extends PublishSubscribe
 Log = new Log
 
 # Expose this single instance of the Log class to the outside world
-Meta.expose "Log", Log
+Macchiato.expose "Log", Log

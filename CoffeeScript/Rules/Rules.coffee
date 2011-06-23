@@ -18,4 +18,4 @@ class Rules extends PublishSubscribe
 		return @
 
 # Expose this class to the parent scope
-Meta.expose "Rules", Rules
+Macchiato.expose "Rules", Rules

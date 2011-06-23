@@ -128,4 +128,4 @@ class PublishSubscribe extends MacchiatoClass
 		return @callMethodArray "notifyObservers", notificationArguments
 
 # Expose this class to the parent scope
-Meta.expose "PublishSubscribe", PublishSubscribe
+Macchiato.expose "PublishSubscribe", PublishSubscribe

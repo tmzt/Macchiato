@@ -41,4 +41,4 @@ class Condition extends PublishSubscribe
 		return @
 
 # Expose this class to the parent scope
-Meta.expose "Condition", Condition
+Macchiato.expose "Condition", Condition

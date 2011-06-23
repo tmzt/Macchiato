@@ -21,4 +21,4 @@ class SimpleDataSource extends DataSource
 		return @
 
 # Expose this class to the parent scope
-Meta.expose "SimpleDataSource", SimpleDataSource
+Macchiato.expose "SimpleDataSource", SimpleDataSource
