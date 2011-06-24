@@ -209,7 +209,7 @@ build = (packageName) ->
         # Read each file to prepend into the prepend data array
         prependData.push read file for file in package.prepend
     # Write the prepend data
-    write "JavaScript/#{libraryName}.js", prependData.join "\n\n"
+    write "Compiled/#{libraryName}.js", prependData.join "\n\n"
     # Determine what the CoffeeScript compile command needs to be
     command = "coffee -pc Compiled/#{libraryName}.coffee >> Compiled/#{libraryName}.js"
     # State that we are compiling the CoffeeScript file
@@ -253,7 +253,7 @@ task "clean", "Removes everything that build creates", ->
     # State that we are doing something
     echo "Erasing files created by build tasks."
     # Erase the temporary CoffeeScript file just in case its still there
-    erase "#{libraryName}.coffee"
+    erase "Compiled/#{libraryName}.coffee"
     # Erase all JavaScript files in the JavaScript directory
-    erase "JavaScript/#{libraryName}.js"
-    erase "JavaScript/#{libraryName}.min.js"
+    erase "Compiled/#{libraryName}.js"
+    erase "Compiled/#{libraryName}.min.js"
