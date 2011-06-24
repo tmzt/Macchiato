@@ -13,13 +13,12 @@ class DataSource extends PublishSubscribe
 
     # Placeholder function for child classes to replace.
     #
-    # param   object  A reference to a Tasks class instance.
-    # return  object  A reference to this class instance.
-    retrieve: (task) ->
-        # Run the next task passing in null for the data argument
-        task.next null
-        # Return a reference to this class instance
-        return @
+    # param   function  The callback function to run once we successfully
+    #                   retrieve the data we are looking for.
+    # return  object    A reference to this class instance.
+    retrieve: (respond) ->
+        # Respond with null for data
+        respond null
 
     # Kicks off a set of tasks to load the data - potentially from an
     # asynchronous source. 
@@ -42,7 +41,7 @@ class DataSource extends PublishSubscribe
                 # object after it has finished retrieving the data, or will
                 # invoke the "exception" named topic channel on any kind of
                 # failure
-                @retrieve taskControl
+                @retrieve taskControl.next
             # The third step
             (taskControl, data) =>
                 # Issue the "complete" notification, passing in the data
