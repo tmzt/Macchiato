@@ -40,6 +40,7 @@ class Macchiato
 # definition in the process
 Macchiato = new Macchiato
 
-# Overlay the Macchiato class, object, and function references onto the parent
-# scope
-(if exports? then exports else @).Macchiato = Macchiato
+# If the DoNotExposeMacchiato flag is not defined or is not set to boolean true
+if not DoNotExposeMacchiato? or DoNotExposeMacchiato isnt true
+    # Attach the Macchiato class to the parent scope
+    (if exports? then exports else @).Macchiato = Macchiato
