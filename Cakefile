@@ -201,8 +201,15 @@ build = (packageName) ->
     data = data.join "\n\n"
     # Write out the compiled CoffeeScript file which contains all of the data
     write "Compiled/#{libraryName}.coffee", data
-    # Start the JavaScript output file with a commented copy of the license
-    write "Compiled/#{libraryName}.js", comment read "LICENSE"
+    # Define a place to store any data to prepend, and start it out with a
+    # commented copy of the LICENSE file
+    prependData = [comment read "LICENSE"]
+    # If we have any data in the prepend member of this package
+    if package.prepend?
+        # Read each file to prepend into the prepend data array
+        prependData.push read file for file in package.prepend
+    # Write the prepend data
+    write "JavaScript/#{libraryName}.js", prependData.join "\n\n"
     # Determine what the CoffeeScript compile command needs to be
     command = "coffee -pc Compiled/#{libraryName}.coffee >> Compiled/#{libraryName}.js"
     # State that we are compiling the CoffeeScript file
