@@ -199,32 +199,30 @@ build = (packageName) ->
     # Concatenate all of the file data together with two newlines in between
     # for readability
     data = data.join "\n\n"
-    # Write out a temporary CoffeeScript file which contains all of the data
-    write "#{libraryName}.coffee", data
+    # Write out the compiled CoffeeScript file which contains all of the data
+    write "Compiled/#{libraryName}.coffee", data
     # Start the JavaScript output file with a commented copy of the license
-    write "JavaScript/#{libraryName}.js", comment read "LICENSE"
+    write "Compiled/#{libraryName}.js", comment read "LICENSE"
     # Determine what the CoffeeScript compile command needs to be
-    command = "coffee -pc #{libraryName}.coffee >> JavaScript/#{libraryName}.js"
+    command = "coffee -pc Compiled/#{libraryName}.coffee >> Compiled/#{libraryName}.js"
     # State that we are compiling the CoffeeScript file
     echo "Compiling #{packageName}."
     # Execute the CoffeeScript compiler on the temporary file
     exec command, (err, stdout, stderr) ->
         # Handle the error if we have one
         handleError err if err
-        # Erase the temporary CoffeeScript file
-        erase "#{libraryName}.coffee"
         # If we should run the compiled JavaScript file
         if package.run? and package.run
             # State that we are running the compiled library code under Node.js
             echo "Running #{packageName} under Node.js."
             # Run it under Node.js
-            exec "node JavaScript/#{libraryName}.js", (err, stdout, stderr) ->
+            exec "node Compiled/#{libraryName}.js", (err, stdout, stderr) ->
                 # Display stdout if there is any output to display
                 echo stdout if stdout isnt ""
         # If we should attempt to minimize the compiled JavaScript file
         if package.minimize? and package.minimize
             # Determine the command to minimize the JavaScript file
-            command = "cat JavaScript/#{libraryName}.js | jsmin > JavaScript/#{libraryName}.min.js"
+            command = "cat Compiled/#{libraryName}.js | jsmin > Compiled/#{libraryName}.min.js"
             # State that we are attempting to minimize the package with jsmin
             echo "Minimizing #{packageName} with jsmin."
             # Attempt to use jsmin to minimize the JavaScript
