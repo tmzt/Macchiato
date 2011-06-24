@@ -36,10 +36,12 @@ class DataSource extends PublishSubscribe
                 taskControl.next()
             # The second step
             (taskControl) =>
-                # Attempt to load the data using the local loadData function,
-                # passing in the task control object. We trust that "loadData"
+                # Attempt to load the data using the local "retrieve" function,
+                # passing in the task control object. We trust that "retrieve"
                 # will call the "next" function on the passed task control
-                # object after it has finished retrieving the data
+                # object after it has finished retrieving the data, or will
+                # invoke the "exception" named topic channel on any kind of
+                # failure
                 @retrieve taskControl
             # The third step
             (taskControl, data) =>
