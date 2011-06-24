@@ -15,7 +15,7 @@ class DataSource extends PublishSubscribe
     #
     # param   function  The callback function to run once we successfully
     #                   retrieve the data we are looking for.
-    # return  object    A reference to this class instance.
+    # return  void
     retrieve: (respond) ->
         # Respond with null for data
         respond null
