@@ -58,8 +58,8 @@ class TimerTask extends Task
 
     # Runs the task function using the passed arguments.
     #
-    # param   mixed   ...  optional  Any number of arguments to forward to the task
-    #                                function itself.
+    # param   mixed   ...  optional  Any number of arguments to forward to the
+    #                                task function itself.
     # return  object                 A reference to this class instance.
     run: ->
         # Create a new instance of the Arguments class to convert the arguments

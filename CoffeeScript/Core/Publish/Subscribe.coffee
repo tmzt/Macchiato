@@ -88,16 +88,18 @@ class PublishSubscribe extends MacchiatoClass
     #
     # param   string  name            The named topic channel that we want to
     #                                 notify. If the name is "*", only the
-    #                                 universal channel is issued the notification.
-    #                                 Otherwise, both the named topic channel as
-    #                                 well as the universal channel are notified.
-    # param   mixed   ...   optional  Any arguments that we want to forward to all
-    #                                 of the observer functions. Defaults to an
-    #                                 empty array if nothing is passed in.
-    #                                 Subscribers to the universal channel will
-    #                                 also receive the name of the topic channel as
-    #                                 the first argument to the observer function,
-    #                                 followed by the rest of the arguments.
+    #                                 universal channel is issued the
+    #                                 notification. Otherwise, both the named
+    #                                 topic channel as well as the universal
+    #                                 channel are notified.
+    # param   mixed   ...   optional  Any arguments that we want to forward to
+    #                                 all of the observer functions. Defaults
+    #                                 to an empty array if nothing is passed
+    #                                 in. Subscribers to the universal channel
+    #                                 will also receive the name of the topic
+    #                                 channel as the first argument to the
+    #                                 observer function, followed by the rest
+    #                                 of the arguments.
     # return  object                  A reference to this class instance.
     notifyObservers: (name) ->
         # Create a new instance of the Arguments class to convert the arguments

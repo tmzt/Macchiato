@@ -12,7 +12,8 @@
 # synchronization.
 class DebouncedTask extends DelayedTask
 
-    # Takes the task function and any options, then assigns them to this object.
+    # Takes the task function and any options, then assigns them to this
+    # object.
     #
     # param  function  taskFunction            The task function itself.
     # param  integer   delay         optional  The amount of delay, in
@@ -23,8 +24,8 @@ class DebouncedTask extends DelayedTask
         # Invoke the parent constructor, forwarding the arguments
         super taskFunction, delay, runScope
 
-    # Runs the task function using the passed arguments, automatically resetting
-    # the previous timeout if there is one.
+    # Runs the task function using the passed arguments, automatically
+    # resetting the previous timeout if there is one.
     #
     # param   array   taskArguments  optional  Arguments to forward to the task
     #                                          function itself.
