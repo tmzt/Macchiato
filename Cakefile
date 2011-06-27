@@ -44,7 +44,6 @@ files =
         "files": [
             "Condition.coffee"
             "Regular/Expression/Condition.coffee"
-            "Rules.coffee"
         ]
     "Client":
         "command": "build:client"
