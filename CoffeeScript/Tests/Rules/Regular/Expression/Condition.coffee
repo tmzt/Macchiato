@@ -8,9 +8,9 @@ class TestRegularExpressionCondition extends Tests
     # param  object  test  A reference to the Test object.
     testRegularExpressionEvaluation: (test) ->
         # Setup a simple data source to use for testing
-        dataSource = new SimpleDataSource "Hello World!"
+        dataSource = SimpleDataSource.factory "Hello World!"
         # Set up the test object instance
-        condition = new RegularExpressionCondition /^Hello/g, dataSource
+        condition = RegularExpressionCondition.factory /^Hello/g, dataSource
         # Add an observer to the universal topic channel
         condition.addObserver "*", (channel) ->
             # Assert that the passed channel name is "success"
