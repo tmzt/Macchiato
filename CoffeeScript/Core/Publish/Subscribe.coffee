@@ -105,7 +105,8 @@ class PublishSubscribe extends MacchiatoClass
         # Create a new instance of the Arguments class to convert the arguments
         # object into an array
         notificationArguments = Arguments.convertToArray arguments
-        # If the channel name that was passed in is not for the universal channel
+        # If the channel name that was passed in is not for the universal
+        # channel
         if name isnt "*" and @namedChannels[name]?
             # The arguments that we will forward to the named topic channel are
             # everything that was passed in after the name argument
@@ -128,6 +129,37 @@ class PublishSubscribe extends MacchiatoClass
         # Return the result of the notifyObservers method, passing the same
         # arguments
         return @callMethodArray "notifyObservers", notificationArguments
+
+    # Returns whether or not the notify observers method has ever been called
+    # on this class instance.
+    #
+    # param   string  name  optional  The named topic channel that we want to
+    #                                 check. If the name is "*", we inspect
+    #                                 each of the topic channels to see if any
+    #                                 of them have ever issued notifications.
+    #                                 Defaults to "*".
+    # return  bool                    If the notify observers method has ever
+    #                                 been called for the passed topic channel
+    #                                 name.
+    hasIssuedNotifications: (name = "*") ->
+        # If the value passed for the name argument is anything other then the
+        # universal topic channel "*"
+        if name isnt "*"
+            # Return the value of the has issued notifications method attached
+            # to the specified topic channel
+            return @namedChannels[name]?.hasIssuedNotifications()
+        # Loop over each of the named channels
+        for channel in @namedChannels
+            # If this channel has not ever issued any notifications
+            if not channel.hasIssuedNotifications()
+                # Move on to the next channel
+                continue
+            # If we made it here, that means that the current channel has
+            # issued notifications
+            return true
+        # If we made it all the way down here, that means we did not find a
+        # named topic channel that had issued notifications
+        return false
 
 # Expose this class to the parent scope
 Macchiato.expose "PublishSubscribe", PublishSubscribe
