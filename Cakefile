@@ -40,17 +40,17 @@ files =
     "Client":
         "command": "build:client"
         "description": "Includes code relevant to client-side development."
-        "dependencies": ["Core", "Rules"]
+        "dependencies": ["Core"]
         "files": [
             "HTML/Element.coffee"
         ]
     "Server":
         "command": "build:server"
         "description": "Includes code relevant to server-side development in Node.js."
-        "dependencies": ["Core", "Rules"]
+        "dependencies": ["Core"]
     "Testing":
         "private": true
-        "dependencies": ["Client", "Server", "Rules"]
+        "dependencies": ["Client", "Server"]
         "files": [
             "Macchiato.coffee"
             "Assertion.coffee"
