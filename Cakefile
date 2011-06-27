@@ -69,7 +69,6 @@ files =
             "Core/Publish/Subscribe.coffee"
             "Core/Delayed/Task.coffee"
             "Core/Tasks.coffee"
-            "Rules/Regular/Expression/Condition.coffee"
         ]
 
 # Trims any whitespace off of the ends of the passed string value
