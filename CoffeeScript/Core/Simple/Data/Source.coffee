@@ -20,10 +20,5 @@ class SimpleDataSource extends DataSource
         # Return a reference to this class instance
         return @
 
-# Define a factory method to create new instances of this class
-SimpleDataSource.factory = (data) ->
-    # Return a new instance of this class, forwarding the passed arguments
-    return new SimpleDataSource data
-
 # Expose this class to the parent scope
 Macchiato.expose "SimpleDataSource", SimpleDataSource
