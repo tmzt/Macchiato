@@ -40,5 +40,10 @@ class Condition extends PublishSubscribe
         # Return a reference to this class instance
         return @
 
+# Define a factory method to create new instances of this class
+Condition.factory = (dataSource) ->
+    # Return a new instance of this class, forwarding the passed arguments
+    return new Condition dataSource
+
 # Expose this class to the parent scope
 Macchiato.expose "Condition", Condition

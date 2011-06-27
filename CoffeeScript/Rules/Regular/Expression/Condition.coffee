@@ -20,5 +20,10 @@ class RegularExpressionCondition extends Condition
         # the result
         return @regexp.test data
 
+# Define a factory method to create new instances of this class
+RegularExpressionCondition.factory = (regexp, dataSource) ->
+    # Return a new instance of this class, forwarding the passed arguments
+    return new RegularExpressionCondition regexp, dataSource
+
 # Expose this class to the parent scope
 Macchiato.expose "RegularExpressionCondition", RegularExpressionCondition
