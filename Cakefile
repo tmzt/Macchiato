@@ -11,7 +11,7 @@ files =
     "All":
         "command": "build"
         "description": "Builds the complete library, excluding unit tests."
-        "dependencies": ["Client", "Server", "Rules", "Testing"]
+        "dependencies": ["Client", "Server", "Testing"]
     "All-Minimized":
         "minimize": true
         "command": "build:minimized"
@@ -36,14 +36,6 @@ files =
             "Data/Source.coffee"
             "Simple/Data/Source.coffee"
             "Synchronizable.coffee"
-        ]
-    "Rules":
-        "command": "build:rules"
-        "description": "Builds the core components and the rules engine."
-        "dependencies": ["Core"]
-        "files": [
-            "Condition.coffee"
-            "Regular/Expression/Condition.coffee"
         ]
     "Client":
         "command": "build:client"
