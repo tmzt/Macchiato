@@ -37,10 +37,12 @@ class DataSource extends PublishSubscribe
             (taskControl) =>
                 # Attempt to load the data using the local "retrieve" function,
                 # passing in the task control object. We trust that "retrieve"
-                # will invoke the passed after it has finished retrieving the
-                # data, or will invoke the "exception" named topic channel on
-                # any kind of unrecoverable failure
-                @retrieve taskControl.next
+                # will invoke the passed callback function after it has
+                # finished retrieving the data, or will invoke the "exception"
+                # named topic channel on any kind of unrecoverable failure
+                @retrieve (data) ->
+                    # Forward the data to the next task function
+                    taskControl.next data
             # The third step
             (taskControl, data) =>
                 # Issue the "complete" notification, passing in the data
