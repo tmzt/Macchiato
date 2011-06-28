@@ -77,7 +77,7 @@ class Tasks extends MacchiatoClass
     # Runs the current task in the task queue.
     #
     # param   mixed   ...  Accepts any number of arguments which will be
-    #                      forwarded to the task method itself.
+    #                      forwarded to the current task.
     # return  object       A reference to this class instance.
     run: ->
         # Convert the arguments object into an array
@@ -89,6 +89,22 @@ class Tasks extends MacchiatoClass
         if @exists @currentTask
             # Run the current task
             @taskQueue[@currentTask].callMethodArray "run", taskArguments
+        # Return a reference to this class instance
+        return @
+
+    # Runs all of the tasks in the task queue.
+    #
+    # param   mixed   ...  Accepts any number of arguments which will be
+    #                      forwarded to each of the tasks.
+    # return  object       A reference to this class instance.
+    runAll: ->
+        # Convert the arguments object into an array
+        taskArguments = Arguments.convertToArray arguments
+        # Inject a reference to this class instance as the first argument that
+        # we pass into each of the task functions
+        taskArguments.unshift @
+        # Loop over each of the tasks in the task queue and run them
+        task.callMethodArray "run", taskArguments for task in @taskQueue
         # Return a reference to this class instance
         return @
 

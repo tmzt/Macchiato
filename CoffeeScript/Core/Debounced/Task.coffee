@@ -27,17 +27,16 @@ class DebouncedTask extends DelayedTask
     # Runs the task function using the passed arguments, automatically
     # resetting the previous timeout if there is one.
     #
-    # param   array   taskArguments  optional  Arguments to forward to the task
-    #                                          function itself.
-    # return  object                           A reference to this class
-    #                                          instance.
+    # param   mixed   ...  optional  Any number of arguments that we want to
+    #                                forward to the task function.
+    # return  object                 A reference to this class instance.
     run: -> 
         # Create a new instance of the Arguments class to convert the arguments
         # object into an array
         taskArguments = (new Arguments(arguments)).toArray()
         # Automatically reset the timeout if it has already been started
         @cancel()
-        # Call the parent run method
+        # Call the parent run method, forwarding any arguments
         DebouncedTask.__super__.run.apply @, taskArguments
         # Return a reference to this class instance
         return @
