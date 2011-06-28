@@ -33,8 +33,6 @@ files =
             "Debounced/Task.coffee"
             "Repeated/Task.coffee"
             "Tasks.coffee"
-            "Data/Source.coffee"
-            "Simple/Data/Source.coffee"
             "Synchronizable.coffee"
         ]
     "Client":
