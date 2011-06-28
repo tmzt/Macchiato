@@ -1,5 +1,4 @@
-# This file defines the base DataSource class, and exposes it to the outside
-# world.
+# This file defines the DataSource class, and exposes it to the outside world.
 #
 # Any conceptual data source, including data sources that require asynchronous
 # remote requests, can be created by extending this class and replacing the
@@ -13,11 +12,12 @@ class DataSource extends PublishSubscribe
 
     # Placeholder function for child classes to replace.
     #
-    # param   function  The callback function to run once we successfully
-    #                   retrieve the data we are looking for.
+    # param   function  respond  The callback function to run once we
+    #                            successfully retrieve the data we are looking
+    #                            for.
     # return  void
     retrieve: (respond) ->
-        # Respond with null for data
+        # Respond with null
         respond null
 
     # Kicks off a set of tasks to load the data - potentially from an
@@ -37,17 +37,16 @@ class DataSource extends PublishSubscribe
             (taskControl) =>
                 # Attempt to load the data using the local "retrieve" function,
                 # passing in the task control object. We trust that "retrieve"
-                # will call the "next" function on the passed task control
-                # object after it has finished retrieving the data, or will
-                # invoke the "exception" named topic channel on any kind of
-                # failure
+                # will invoke the passed after it has finished retrieving the
+                # data, or will invoke the "exception" named topic channel on
+                # any kind of unrecoverable failure
                 @retrieve taskControl.next
             # The third step
             (taskControl, data) =>
                 # Issue the "complete" notification, passing in the data
                 @notifyObservers "complete", @, data
         ]
-        # Run the first data retrieval task
+        # Run the data retrieval task
         dataRetrievalTasks.run()
         # Return a reference to this class instance
         return @
