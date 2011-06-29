@@ -123,12 +123,31 @@ class PublishSubscribe extends MacchiatoClass
 
     # Simple alias for notifyObservers.
     publish: ->
-        # Create a new instance of the Arguments class to convert the arguments
-        # object into an array
+        # Convert the JavaScript arguments object into a normal array
         notificationArguments = Arguments.convertToArray arguments
         # Return the result of the notifyObservers method, passing the same
         # arguments
         return @callMethodArray "notifyObservers", notificationArguments
+
+    # Forwards all future notifications issued on a specific named topic
+    # channel to an identically-named topic channel belonging to an external
+    # PublishSubscribe class instance.
+    #
+    # param   string  name      The named topic channel to forward.
+    # param   object  instance  An external PublishSubscribe class instance to
+    #                           forward to.
+    # return  object            A reference to this class instance.
+    forwardNotifications: (name, instance) ->
+        # Attach an observer function to the named topic channel
+        @addObserver name, ->
+            # Convert the JavaScript arguments object into a normal array
+            notificationArguments = Arguments.convertToArray arguments
+            # Add the topic channel name as the first argument
+            notificationArguments.unshift name
+            # Call the external notify observers method forwarding any
+            # arguments that were passed in
+            instance.callMethodArray "notifyObservers", notificationArguments
+            
 
     # Returns whether or not the notify observers method has ever been called
     # on this class instance.
