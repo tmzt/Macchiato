@@ -2,7 +2,7 @@
 #
 # Each HTMLElement class instance manages a single HTML document element,
 # providing one final layer of abstraction before the underlying document is
-# actually manipulated or queried.
+# actually manipulated.
 class HTMLElement extends PublishSubscribe
 
     # Calls the parent constructor.
