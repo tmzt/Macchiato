@@ -37,7 +37,7 @@ class Observable extends MacchiatoClass
     # return  object                 A reference to this class instance.
     notifyObservers: ->
         # Set the notify observers issued flag
-        notifyObserversInvoked = yes
+        @notifyObserversInvoked = yes
         # If we do not have any observer functions
         if @observers.length < 1
             # Do nothing but return a reference to this class instance
