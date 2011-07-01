@@ -24,6 +24,7 @@ files =
             "Macchiato.coffee"
             "Macchiato/Class.coffee"
             "Arguments.coffee"
+            "Base64/Utilities.coffee"
             "Observable.coffee"
             "Publish/Subscribe.coffee"
             "Log.coffee"
@@ -201,8 +202,15 @@ build = (packageName) ->
     data = data.join "\n\n"
     # Write out a temporary CoffeeScript file which contains all of the data
     write "#{libraryName}.coffee", data
-    # Start the JavaScript output file with a commented copy of the license
-    write "JavaScript/#{libraryName}.js", comment read "LICENSE"
+    # Define a place to store any data to prepend, and start it out with a
+    # commented copy of the LICENSE file
+    prependData = [comment read "LICENSE"]
+    # If we have any data in the prepend member of this package
+    if package.prepend?
+        # Read each file to prepend into the prepend data array
+        prependData.push read file for file in package.prepend
+    # Write the prepend data
+    write "JavaScript/#{libraryName}.js", prependData.join "\n\n"
     # Determine what the CoffeeScript compile command needs to be
     command = "coffee -pc #{libraryName}.coffee >> JavaScript/#{libraryName}.js"
     # State that we are compiling the CoffeeScript file
