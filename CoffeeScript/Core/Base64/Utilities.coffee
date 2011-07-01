@@ -43,12 +43,12 @@ class Base64Utilities extends MacchiatoClass
             # Grab the remaining 6 bits from the third character
             encodedIndex4 = characterCode3 & 63;
             # If the second character code is not a number
-            if typeof characterCode2 isnt "number"
+            if isNaN characterCode2
                 # The third and fourth encoded indexes should point at the "="
                 # sign in the output keys string
                 encodedIndex3 = encodedIndex4 = 64
             # Otherwise, if just the last character code is not a number
-            else if typeof characterCode3 isnt "number"
+            else if isNaN characterCode3
                 # Point it at the "=" sign in the output keys string
                 encodedIndex4 = 64
             # Concatenate this 4 character block to the final output string
