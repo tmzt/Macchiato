@@ -36,7 +36,7 @@ class Base64Utilities extends MacchiatoClass
             characterCode3 = input.charCodeAt bufferPosition++
 
             # Grab 6 bits from the first character
-            encodedIndex1 = characterCode1 >> 2;
+            encodedIndex1 = characterCode1 >> 2
             # Grab the remaining 2 bits from the first character and 4 bits
             # from the second character
             encodedIndex2 = ((characterCode1 & 3) << 4) | (characterCode2 >> 4)
@@ -57,11 +57,10 @@ class Base64Utilities extends MacchiatoClass
                 encodedIndex4 = 64
 
             # Concatenate this 4 character block to the final output string
-            output = output +
-                @outputKeys.charAt encodedIndex1 +
-                @outputKeys.charAt encodedIndex2 +
-                @outputKeys.charAt encodedIndex3 +
-                @outputKeys.charAt encodedIndex4
+            output += @outputKeys.charAt(encodedIndex1) +
+                @outputKeys.charAt(encodedIndex2) +
+                @outputKeys.charAt(encodedIndex3) +
+                @outputKeys.charAt(encodedIndex4)
 
         # Return the finished output string
         return output

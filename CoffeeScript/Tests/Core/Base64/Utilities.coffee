@@ -3,7 +3,8 @@ class TestBase64Utilities extends Tests
 
     # Attempts to Base64 encode a simple text string.
     #
-    # param  object  test  A reference to the Test object.
+    # param   object  test  A reference to the Test object.
+    # return  void
     testEncode: (test) ->
         # Define a value to Base64 encode
         value = "Hello World!"
@@ -12,6 +13,21 @@ class TestBase64Utilities extends Tests
         # Confirm that the result is what we expect it to be
         test.assertEquals "SGVsbG8gV29ybGQh", base64Value, "the Base64 " +
             "encoded value was correct"
+        # Mark this test as completed
+        test.complete()
+
+    # Attempts to decode a Base64-encoded string.
+    #
+    # param   object  test  A reference to the Test object.
+    # return  void
+    testDecode: (test) ->
+        # Define a value to Base64 encode
+        base64Value = "SGVsbG8gV29ybGQh"
+        # Attempt to Base64 encode this value
+        decodedValue = Base64Utilities.decode base64Value
+        # Confirm that the result is what we expect it to be
+        test.assertEquals "Hello World!", decodedValue, "the Base64 decoded " +
+            "value was correct"
         # Mark this test as completed
         test.complete()
 
