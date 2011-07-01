@@ -11,7 +11,7 @@ files =
     "All":
         "command": "build"
         "description": "Builds the complete library, excluding unit tests."
-        "dependencies": ["Client", "Server", "Rules", "Testing"]
+        "dependencies": ["Client", "Server", "Testing"]
     "All-Minimized":
         "minimize": true
         "command": "build:minimized"
@@ -34,33 +34,22 @@ files =
             "Debounced/Task.coffee"
             "Repeated/Task.coffee"
             "Tasks.coffee"
-            "Data/Source.coffee"
-            "Simple/Data/Source.coffee"
             "Synchronizable.coffee"
-        ]
-    "Rules":
-        "command": "build:rules"
-        "description": "Builds the core components and the rules engine."
-        "dependencies": ["Core"]
-        "files": [
-            "Condition.coffee"
-            "Regular/Expression/Condition.coffee"
-            "Rules.coffee"
         ]
     "Client":
         "command": "build:client"
         "description": "Includes code relevant to client-side development."
-        "dependencies": ["Core", "Rules"]
+        "dependencies": ["Core"]
         "files": [
             "HTML/Element.coffee"
         ]
     "Server":
         "command": "build:server"
         "description": "Includes code relevant to server-side development in Node.js."
-        "dependencies": ["Core", "Rules"]
+        "dependencies": ["Core"]
     "Testing":
         "private": true
-        "dependencies": ["Client", "Server", "Rules"]
+        "dependencies": ["Client", "Server"]
         "files": [
             "Macchiato.coffee"
             "Assertion.coffee"
@@ -79,7 +68,6 @@ files =
             "Core/Publish/Subscribe.coffee"
             "Core/Delayed/Task.coffee"
             "Core/Tasks.coffee"
-            "Rules/Regular/Expression/Condition.coffee"
         ]
 
 # Trims any whitespace off of the ends of the passed string value
@@ -200,8 +188,8 @@ build = (packageName) ->
     # Concatenate all of the file data together with two newlines in between
     # for readability
     data = data.join "\n\n"
-    # Write out a temporary CoffeeScript file which contains all of the data
-    write "#{libraryName}.coffee", data
+    # Write out the compiled CoffeeScript file which contains all of the data
+    write "Compiled/#{libraryName}.coffee", data
     # Define a place to store any data to prepend, and start it out with a
     # commented copy of the LICENSE file
     prependData = [comment read "LICENSE"]
@@ -210,29 +198,27 @@ build = (packageName) ->
         # Read each file to prepend into the prepend data array
         prependData.push read file for file in package.prepend
     # Write the prepend data
-    write "JavaScript/#{libraryName}.js", prependData.join "\n\n"
+    write "Compiled/#{libraryName}.js", prependData.join "\n\n"
     # Determine what the CoffeeScript compile command needs to be
-    command = "coffee -pc #{libraryName}.coffee >> JavaScript/#{libraryName}.js"
+    command = "coffee -pc Compiled/#{libraryName}.coffee >> Compiled/#{libraryName}.js"
     # State that we are compiling the CoffeeScript file
     echo "Compiling #{packageName}."
     # Execute the CoffeeScript compiler on the temporary file
     exec command, (err, stdout, stderr) ->
         # Handle the error if we have one
         handleError err if err
-        # Erase the temporary CoffeeScript file
-        erase "#{libraryName}.coffee"
         # If we should run the compiled JavaScript file
         if package.run? and package.run
             # State that we are running the compiled library code under Node.js
             echo "Running #{packageName} under Node.js."
             # Run it under Node.js
-            exec "node JavaScript/#{libraryName}.js", (err, stdout, stderr) ->
+            exec "node Compiled/#{libraryName}.js", (err, stdout, stderr) ->
                 # Display stdout if there is any output to display
                 echo stdout if stdout isnt ""
         # If we should attempt to minimize the compiled JavaScript file
         if package.minimize? and package.minimize
             # Determine the command to minimize the JavaScript file
-            command = "cat JavaScript/#{libraryName}.js | jsmin > JavaScript/#{libraryName}.min.js"
+            command = "cat Compiled/#{libraryName}.js | jsmin > Compiled/#{libraryName}.min.js"
             # State that we are attempting to minimize the package with jsmin
             echo "Minimizing #{packageName} with jsmin."
             # Attempt to use jsmin to minimize the JavaScript
@@ -256,7 +242,7 @@ task "clean", "Removes everything that build creates", ->
     # State that we are doing something
     echo "Erasing files created by build tasks."
     # Erase the temporary CoffeeScript file just in case its still there
-    erase "#{libraryName}.coffee"
+    erase "Compiled/#{libraryName}.coffee"
     # Erase all JavaScript files in the JavaScript directory
-    erase "JavaScript/#{libraryName}.js"
-    erase "JavaScript/#{libraryName}.min.js"
+    erase "Compiled/#{libraryName}.js"
+    erase "Compiled/#{libraryName}.min.js"

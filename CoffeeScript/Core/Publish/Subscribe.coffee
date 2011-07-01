@@ -88,22 +88,25 @@ class PublishSubscribe extends MacchiatoClass
     #
     # param   string  name            The named topic channel that we want to
     #                                 notify. If the name is "*", only the
-    #                                 universal channel is issued the notification.
-    #                                 Otherwise, both the named topic channel as
-    #                                 well as the universal channel are notified.
-    # param   mixed   ...   optional  Any arguments that we want to forward to all
-    #                                 of the observer functions. Defaults to an
-    #                                 empty array if nothing is passed in.
-    #                                 Subscribers to the universal channel will
-    #                                 also receive the name of the topic channel as
-    #                                 the first argument to the observer function,
-    #                                 followed by the rest of the arguments.
+    #                                 universal channel is issued the
+    #                                 notification. Otherwise, both the named
+    #                                 topic channel as well as the universal
+    #                                 channel are notified.
+    # param   mixed   ...   optional  Any arguments that we want to forward to
+    #                                 all of the observer functions. Defaults
+    #                                 to an empty array if nothing is passed
+    #                                 in. Subscribers to the universal channel
+    #                                 will also receive the name of the topic
+    #                                 channel as the first argument to the
+    #                                 observer function, followed by the rest
+    #                                 of the arguments.
     # return  object                  A reference to this class instance.
     notifyObservers: (name) ->
         # Create a new instance of the Arguments class to convert the arguments
         # object into an array
         notificationArguments = Arguments.convertToArray arguments
-        # If the channel name that was passed in is not for the universal channel
+        # If the channel name that was passed in is not for the universal
+        # channel
         if name isnt "*" and @namedChannels[name]?
             # The arguments that we will forward to the named topic channel are
             # everything that was passed in after the name argument
@@ -120,12 +123,62 @@ class PublishSubscribe extends MacchiatoClass
 
     # Simple alias for notifyObservers.
     publish: ->
-        # Create a new instance of the Arguments class to convert the arguments
-        # object into an array
+        # Convert the JavaScript arguments object into a normal array
         notificationArguments = Arguments.convertToArray arguments
         # Return the result of the notifyObservers method, passing the same
         # arguments
         return @callMethodArray "notifyObservers", notificationArguments
+
+    # Forwards all future notifications issued on a specific named topic
+    # channel to an identically-named topic channel belonging to an external
+    # PublishSubscribe class instance.
+    #
+    # param   string  name      The named topic channel to forward.
+    # param   object  instance  An external PublishSubscribe class instance to
+    #                           forward to.
+    # return  object            A reference to this class instance.
+    forwardNotifications: (name, instance) ->
+        # Attach an observer function to the named topic channel
+        @addObserver name, ->
+            # Convert the JavaScript arguments object into a normal array
+            notificationArguments = Arguments.convertToArray arguments
+            # Add the topic channel name as the first argument
+            notificationArguments.unshift name
+            # Call the external notify observers method forwarding any
+            # arguments that were passed in
+            instance.callMethodArray "notifyObservers", notificationArguments
+            
+
+    # Returns whether or not the notify observers method has ever been called
+    # on this class instance.
+    #
+    # param   string  name  optional  The named topic channel that we want to
+    #                                 check. If the name is "*", we inspect
+    #                                 each of the topic channels to see if any
+    #                                 of them have ever issued notifications.
+    #                                 Defaults to "*".
+    # return  bool                    If the notify observers method has ever
+    #                                 been called for the passed topic channel
+    #                                 name.
+    hasIssuedNotifications: (name = "*") ->
+        # If the value passed for the name argument is anything other then the
+        # universal topic channel "*"
+        if name isnt "*"
+            # Return the value of the has issued notifications method attached
+            # to the specified topic channel
+            return @namedChannels[name]?.hasIssuedNotifications()
+        # Loop over each of the named channels
+        for channel in @namedChannels
+            # If this channel has not ever issued any notifications
+            if not channel.hasIssuedNotifications()
+                # Move on to the next channel
+                continue
+            # If we made it here, that means that the current channel has
+            # issued notifications
+            return true
+        # If we made it all the way down here, that means we did not find a
+        # named topic channel that had issued notifications
+        return false
 
 # Expose this class to the parent scope
 Macchiato.expose "PublishSubscribe", PublishSubscribe

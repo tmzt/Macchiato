@@ -2,13 +2,13 @@
 # advance and rewind the current position in the tasks queue.
 class Tasks extends MacchiatoClass
 
-    # Initialize the class variables and add any Task functions that were
-    # passed in.
+    # Initialize the instance variables and add any task functions that were
+    # passed into the tasks array.
     #
     # param  array  tasks  optional  Adds functions in this array to the task
     #                                queue. Defaults to an empty array.
     constructor: (tasks = []) ->
-        # Set everything to the initial state
+        # Set everything to an initial state
         @reset()
         # Add each function in the passed tasks array
         @add taskFunction for taskFunction in tasks if tasks.length > 0
@@ -27,7 +27,7 @@ class Tasks extends MacchiatoClass
     # Adds a single task function to the task queue.
     #
     # param   function  taskFunction  A single task function to add to the
-    #                                 queue.
+    #                                 task queue.
     # return  object                  A reference to this class instance.
     add: (taskFunction) ->
         # Adds a task to the task queue
@@ -38,53 +38,52 @@ class Tasks extends MacchiatoClass
     # Runs the next task function in the tasks queue.
     #
     # param   mixed   ...  optional  Any number of arguments that we want to
-    #                                forward to all of the observer functions.
-    # return  object                 Returns the result of the run class
-    #                                method.
+    #                                forward to the next task.
+    # return  object                 A reference to this class instance.
     next: ->
-        # Do nothing unless a next task actually exists
+        # Do nothing unless task actually exists for the next task index
         return @ unless @exists @currentTask + 1
-        # Increment the current task by 1
+        # Increment the current task index by 1
         @currentTask++
-        # Create a new instance of the Arguments class to convert the arguments
-        # object into an array
+        # Convert the arguments object into an array
         taskArguments = Arguments.convertToArray arguments
         # Run the current task, forwarding the arguments that were passed in
         return @callMethodArray "run", taskArguments
 
-    # Runs the previous task in the tasks queue.
+    # Runs the previous task function in the tasks queue.
     #
-    # return  object  Returns the result of the run class method.
+    # param   mixed   ...  optional  Any number of arguments that we want to
+    #                                forward to the previous task.
+    # return  object                 A reference to this class instance.
     previous: ->
         # Do nothing unless a previous task actually exists
         return @ unless @exists @currentTask - 1
-        # Decrement the current task by 1
+        # Decrement the current task index by 1
         @currentTask--
-        # Create a new instance of the Arguments class to convert the arguments
-        # object into an array
+        # Convert the arguments object into an array
         taskArguments = Arguments.convertToArray arguments
         # Run the current task, forwarding the arguments that were passed in
         return @callMethodArray "run", taskArguments
 
-    # Returns true if a task exists in the specified queue location.
+    # Returns true if a task exists in the tasks queue for the specified task
+    # index.
     #
     # param   integer  taskIndex  The index in the task queue to check.
     # return  boolean             If the requested queue index exists, true.
     exists: (taskIndex) ->
-        # Determine if the current task function exists or not
+        # Determine if the specified task function exists or not
         return @taskQueue[taskIndex]?
 
     # Runs all of the tasks in the task queue.
     #
     # param   mixed   ...  Accepts any number of arguments which will be
-    #                      forwarded to each of the task methods.
+    #                      forwarded to each of the tasks.
     # return  object       A reference to this class instance.
     runAll: ->
-        # Create a new instance of the Arguments class to convert the arguments
-        # object into an array
+        # Convert the arguments object into an array
         taskArguments = Arguments.convertToArray arguments
-        # Make a reference to this class instance the first argument that we
-        # pass into the task function
+        # Inject a reference to this class instance as the first argument that
+        # we pass into each of the task functions
         taskArguments.unshift @
         # Loop over each of the tasks in the task queue and run them
         task.callMethodArray "run", taskArguments for task in @taskQueue
@@ -94,29 +93,31 @@ class Tasks extends MacchiatoClass
     # Runs the current task in the task queue.
     #
     # param   mixed   ...  Accepts any number of arguments which will be
-    #                      forwarded to the task method itself.
+    #                      forwarded to the current task.
     # return  object       A reference to this class instance.
     run: ->
-        # Create a new instance of the Arguments class to convert the arguments
-        # object into an array
+        # Convert the arguments object into an array
         taskArguments = Arguments.convertToArray arguments
-        # Make a reference to this class instance the first argument that we
-        # pass into the task function
+        # Inject a reference to this class instance as the first argument that
+        # we pass into the task function
         taskArguments.unshift @
-        # Run the current task, passing in a reference to the this Tasks class
-        # instance, assuming we have a task at this queue position
-        @taskQueue[@currentTask].callMethodArray "run", taskArguments if \
-            @exists @currentTask
+        # If we have a task in the tasks queue for the current task index
+        if @exists @currentTask
+            # Run the current task
+            @taskQueue[@currentTask].callMethodArray "run", taskArguments
         # Return a reference to this class instance
         return @
 
-# Define a simple helper function that creates a new instance of Tasks, using
-# the passed tasks argument, then runs it immediately.
-#
-# param  array  tasks  The tasks to add to the new Tasks object.
-Tasks.runTasks = (tasks) ->
-    # Create the new Tasks class instance, and run it
-    new Tasks(tasks).run()
+    # Define a static helper method that creates a new instance of this class
+    # using the passed tasks argument, then runs it immediately.
+    #
+    # param   array   tasks  optional  Adds functions in this array to the task
+    #                                  queue. Defaults to an empty array.
+    # return  object                   A reference to the new Tasks class
+    #                                  instance.
+    @runTasks: (tasks = []) ->
+        # Create the new Tasks class instance, and run it
+        new Tasks(tasks).run()
 
 # Expose this class to the parent scope
 Macchiato.expose "Tasks", Tasks

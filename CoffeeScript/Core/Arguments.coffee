@@ -10,7 +10,8 @@ class Arguments extends MacchiatoClass
     #
     # param  object  argumentsObject  A JavaScript arguments object.
     constructor: (argumentsObject) ->
-        # Convert the arguments object to an array and store it on this class instance
+        # Convert the arguments object to an array and store it on this class
+        # instance
         @argumentsArray = Array.prototype.slice.call argumentsObject, 0
 
     # Returns a reference to the arguments array.
@@ -20,11 +21,15 @@ class Arguments extends MacchiatoClass
         # Return a reference to the arguments array
         return @argumentsArray
 
-# Simple argument copy method
-Arguments.convertToArray = (argumentsObject) ->
-    # Create a new instance of the Arguments class, passing it the arguments
-    # object
-    return (new Arguments(argumentsObject)).toArray()
+    # Class method to convert JavaScript arguments objects into normal arrays.
+    #
+    # param   object  argumentsObject  A JavaScript arguments object.
+    # return  array                    The arguments object converted into a
+    #                                  normal array. 
+    @convertToArray: (argumentsObject) ->
+        # Create a new instance of the Arguments class, passing it the arguments
+        # object
+        return (new Arguments(argumentsObject)).toArray()
 
 # Expose this class to the parent scope
 Macchiato.expose "Arguments", Arguments

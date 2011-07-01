@@ -10,6 +10,8 @@ class Observable extends MacchiatoClass
     constructor: ->
         # Create a place for the observer functions to go
         @observers = []
+        # Indicates if the notify observers method has ever been invoked
+        @notifyObserversInvoked = no
 
     # Adds a single Observer function to the list of observers.
     #
@@ -34,6 +36,8 @@ class Observable extends MacchiatoClass
     #                                forward to all of the observer functions.
     # return  object                 A reference to this class instance.
     notifyObservers: ->
+        # Set the notify observers issued flag
+        @notifyObserversInvoked = yes
         # If we do not have any observer functions
         if @observers.length < 1
             # Do nothing but return a reference to this class instance
@@ -54,6 +58,14 @@ class Observable extends MacchiatoClass
         # Return the result of the notifyObservers method, passing the same
         # argument values that were passed in
         return @callMethodArray "notifyObservers", observerArguments
+
+    # Returns whether or not the notify observers method has ever been called
+    # on this class instance.
+    #
+    # return  bool  If the notify observers method has ever been called, true.
+    hasIssuedNotifications: ->
+        # Return the value of the notify observers invoked flag
+        return @notifyObserversInvoked
 
 # Expose this class to the parent scope
 Macchiato.expose "Observable", Observable
