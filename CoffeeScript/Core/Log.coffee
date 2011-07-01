@@ -14,33 +14,33 @@ class Log extends PublishSubscribe
 
     # Fires the appropriate notification to any observers that may be present. 
     #
-    # param   string  The log level of the message.
-    # param   string  The message to log.
-    # return  object  A reference to this class instance.
+    # param   string  level    The log level of the message.
+    # param   string  message  The message to log.
+    # return  object           A reference to this class instance.
     add: (level, message) ->
         # Issue the notification, passing in the log message
         @notifyObservers level, [message]
 
     # Issues an info-level notification with the passed message.
     #
-    # param   string  The message to log.
-    # return  object  A reference to this class instance.
+    # param   string  message  The message to log.
+    # return  object           A reference to this class instance.
     info: (message) ->
         # Issue the info-level notification
         @add "info", message
 
     # Issues a debug-level notification with the passed message.
     #
-    # param   string  The message to log.
-    # return  object  A reference to this class instance.
+    # param   string  message  The message to log.
+    # return  object           A reference to this class instance.
     debug: (message) ->
         # Issue the debug-level notification
         @add "debug", message
 
     # Issues an error-level notification with the passed message.
     #
-    # param   string  The message to log.
-    # return  object  A reference to this class instance.
+    # param   string  message  The message to log.
+    # return  object           A reference to this class instance.
     error: (message) ->
         # Issue the error-level notification
         @add "error", message
@@ -48,10 +48,11 @@ class Log extends PublishSubscribe
     # Allows for developers to attach their own custom log-writer classes
     # quickly and painlessly.
     #
-    # param   object  A log writer class with, at the very least, a single
-    #                 method named "add" which should accept the log-level and
-    #                 message as the first and second arguments.
-    # return  object  A reference to this class instance.
+    # param   object  instance  A log writer class with, at the very least, a
+    #                           single method named "add" which can accept the
+    #                           log-level string and message string as the
+    #                           first and second arguments.
+    # return  object            A reference to this class instance.
     attach: (instance) ->
         # Attach the passed class instance to the universal channel
         @addObserver "*", (level, message) ->
