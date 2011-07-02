@@ -1,5 +1,8 @@
 # This file defines the Base64Utilities class, and exposes it to the outside
 # world.
+#
+# For more information, please see the Wikipedia article on Base64 encoding
+# located at [http://en.wikipedia.org/wiki/Base64].
 class Base64Utilities extends MacchiatoClass
 
     # Class variable to hold the output keys string. Base64 encoded values are
@@ -9,9 +12,6 @@ class Base64Utilities extends MacchiatoClass
 
     # Returns a Base64-encoded string value using the passed input value. The
     # passed input value can contain anything, including binary data.
-    #
-    # For more information, please see the Wikipedia article on Base64 encoding
-    # located at [http://en.wikipedia.org/wiki/Base64].
     #
     # param   string  The string data to Base64 encode.
     # return  string  The Base64-encoded version of the passed input string.
