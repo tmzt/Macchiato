@@ -10,12 +10,6 @@ class Base64Utilities extends MacchiatoClass
     # Returns a Base64-encoded string value using the passed input value. The
     # passed input value can contain anything, including binary data.
     #
-    # The actual encoding process is reasonably straightforward. This function
-    # loops over the passed input string from left to right taking 3 character
-    # chunks. Then, using the JavaScript bitwise operators, 6 bits are removed
-    # from each 8 bit source character to create a 4th output character using
-    # the reassembled bits.
-    #
     # For more information, please see the Wikipedia article on Base64 encoding
     # located at [http://en.wikipedia.org/wiki/Base64].
     #
