@@ -1,8 +1,8 @@
 # This file defines the Base64Utilities class, and exposes it to the outside
 # world.
 #
-# For more information, please see the Wikipedia article on Base64 encoding
-# located at [http://en.wikipedia.org/wiki/Base64].
+# For more informationm on Base64 encoding and decoding, please see the
+# Wikipedia article located at [http://en.wikipedia.org/wiki/Base64].
 class Base64Utilities extends MacchiatoClass
 
     # Class variable to hold the output keys string. Base64 encoded values are
