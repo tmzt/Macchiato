@@ -11,10 +11,12 @@ class UTF8Utilities extends MacchiatoClass
         input = input.replace /\r\n/g, "\n"
         # Initialize the output string
         output = ""
+        # Initialize the buffer position
+        bufferPosition = 0
         # Loop over each character in the input string
-        for bufferPosition in input
+        while bufferPosition < input.length
             # Grab the current character code
-            characterCode = input.charCodeAt bufferPosition
+            characterCode = input.charCodeAt bufferPosition++
             # If the character code is within the normal ASCII range
             if characterCode < 128
                 # Simply add this character code to the output string
@@ -36,6 +38,8 @@ class UTF8Utilities extends MacchiatoClass
     @decode: (input) ->
         # Initialize the output string
         output = ""
+        # Initialize the buffer position
+        bufferPosition = 0
         # Loop until we get to the end of the string
         while bufferPosition < input.length
             # Grab the current character code
