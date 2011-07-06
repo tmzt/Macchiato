@@ -46,4 +46,20 @@ class UTF8Utilities extends MacchiatoClass
                 output += String.fromCharCode characterCode
                 # Increment the buffer position
                 bufferPosition++
-
+            else if characterCode > 191 and characterCode < 224
+                # Grab the second character from the buffer
+                characterCode2 = input.charCodeAt bufferPosition + 1
+                # Add this character to the output string
+                output += String.fromCharCode ((characterCode & 31) << 6) | (characterCode2 & 63)
+                # Increment the buffer position by 2
+                bufferPosition += 2
+            else
+                # Grab the second and third characters from the buffer
+                characterCode2 = input.charCodeAt bufferPosition + 1
+                characterCode3 = input.charCodeAt bufferPosition + 2
+                # Add this character to the output string
+                output += String.fromCharCode ((characterCode & 15) << 12) | ((characterCode2 & 63) << 6) | (characterCode3 & 63)
+                # Increment the buffer position by 3
+                bufferPosition += 3
+        # Return the finished output string
+        return output
