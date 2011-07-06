@@ -1,7 +1,7 @@
 # This file defines the Base64Utilities class, and exposes it to the outside
 # world.
 #
-# For more informationm on Base64 encoding and decoding, please see the
+# For more information on Base64 encoding and decoding, please see the
 # Wikipedia article located at [http://en.wikipedia.org/wiki/Base64].
 class Base64Utilities extends MacchiatoClass
 
@@ -40,7 +40,8 @@ class Base64Utilities extends MacchiatoClass
             if isNaN characterCode2
                 # The third and fourth encoded indexes should point at the "="
                 # sign in the output keys string
-                encodedIndex3 = encodedIndex4 = 64
+                encodedIndex3 = 64
+                encodedIndex4 = 64
             # Otherwise, if just the last character code is not a number
             else if isNaN characterCode3
                 # Point it at the "=" sign in the output keys string
