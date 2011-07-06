@@ -6,7 +6,7 @@ class UTF8Utilities extends MacchiatoClass
     #
     # param   string  input  The string to UTF-8-encode.
     # return  string         The encoded string.
-    encode: (input) ->
+    @encode: (input) ->
         # Replace any \r\n sequences with \n
         input = input.replace /\r\n/g, "\n"
         # Initialize the output string
@@ -33,7 +33,7 @@ class UTF8Utilities extends MacchiatoClass
     #
     # param   string  input  The UTF-8-encoded string to decode.
     # return  string         The decoded string.
-    decode: (input) ->
+    @decode: (input) ->
         # Initialize the output string
         output = ""
         # Loop until we get to the end of the string
