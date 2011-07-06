@@ -63,3 +63,6 @@ class UTF8Utilities extends MacchiatoClass
                 bufferPosition += 3
         # Return the finished output string
         return output
+
+# Expose this class to the parent scope
+Macchiato.expose "UTF8Utilities", UTF8Utilities

@@ -85,3 +85,6 @@ class Base64Utilities extends MacchiatoClass
 
         # Return the decoded output value
         return output
+
+# Expose this class to the parent scope
+Macchiato.expose "Base64Utilities", Base64Utilities
