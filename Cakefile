@@ -24,6 +24,7 @@ files =
             "Macchiato.coffee"
             "Macchiato/Class.coffee"
             "Arguments.coffee"
+            "UTF8/Utilities.coffee"
             "Base64/Utilities.coffee"
             "Observable.coffee"
             "Publish/Subscribe.coffee"
