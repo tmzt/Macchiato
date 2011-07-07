@@ -132,6 +132,22 @@ class Test extends PublishSubscribe
         # along with the human-readable description to the assert function
         return @assertTrue left is right, description
 
+    # Asserts that the value passed in for the left-hand side of the comparison
+    # is not equal to the value passed in for the right-hand side of the
+    # comparison, then forwards the result of this test to the assert function.
+    #
+    # param   mixed    left         The value for the left-hand side of the
+    #                               equality comparison.        
+    # param   mixed    right        The value for the left-hand side of the
+    #                               equality comparison.
+    # param   string   description  Optional. A human-readable description for
+    #                               this assertion. Defaults to an empty string.
+    # return  object                A reference to this class instance.
+    assertNotEquals: (left, right, description = "") ->
+        # Compare the left to the right and then forward the result of the test
+        # along with the human-readable description to the assert function
+        return @assertTrue left isnt right, description
+        
     # Sets the boolean class variable that indicates that this test is
     # complete, then issues the "complete" notification to any observers.
     #
