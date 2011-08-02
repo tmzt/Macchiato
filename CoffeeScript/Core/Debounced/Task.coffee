@@ -33,7 +33,7 @@ class DebouncedTask extends DelayedTask
     run: -> 
         # Create a new instance of the Arguments class to convert the arguments
         # object into an array
-        taskArguments = (new Arguments(arguments)).toArray()
+        taskArguments = Arguments.convertToArray arguments
         # Automatically reset the timeout if it has already been started
         @cancel()
         # Call the parent run method, forwarding any arguments
