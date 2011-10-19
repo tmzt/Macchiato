@@ -5,6 +5,14 @@
 # working with classes easier.
 class MacchiatoClass
 
+    # Invokes the named method on the scope of this class instance, assuming
+    # that there are no arguments to forward.
+    #
+    # return  mixed  The result of the method call.
+    callMethod: (name) ->
+        # Return the result of the named method
+        return @[name].call @
+
     # Invokes the named method on the scope of this class instance, forwarding
     # the passed arguments array to the method.
     #
