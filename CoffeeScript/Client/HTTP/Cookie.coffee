@@ -23,6 +23,8 @@ class HTTPCookie extends MacchiatoClass
         # Attempt to grab the cookie value
         value = document.cookie.match('(?:^|;)\\s*' + @escapeRegExp(@name) +
             '=([^;]*)')
+        # 
+
         # Return a reference to this class instance
         return @
 
