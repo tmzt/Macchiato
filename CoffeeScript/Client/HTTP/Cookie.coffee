@@ -16,7 +16,7 @@ class HTTPCookie extends MacchiatoClass
         @cookieValue = null
         @cookiePath = '/'
         @cookieDomain = no
-        @cookieDuration = no
+        @cookieExpiration = no
         @cookieSecure = no
         @encodeCookie = yes
         # Loop over each of the options
@@ -59,7 +59,17 @@ class HTTPCookie extends MacchiatoClass
         cookie += '; domain=' + @cookieDomain if @cookieDomain
         # Add the path information, if we have one
         cookie += '; path=' + @cookiePath if @cookiePath
-        # If we have a 
+        # If we have an expiration time
+        if @cookieExpiration
+            # Define a new date class instance to help us generate the GMT
+            # string required for HTTP cookies
+            date = new Date()
+            # Set the time to be the current time plus a passed number of days
+            date.setTime date.getTime() + @cookieExpiration * 24 * 60 * 60 * 1000
+            # Set the cookie expiration
+            cookie += '; expires=' + date.toGMTString()
+        # If the cookie needs to be secure
+        cookie += '; secure' if @cookieSecure
         # Write the cookie
         document.cookie = cookie
         # Return a reference to this class instance
