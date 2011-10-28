@@ -43,6 +43,7 @@ files =
         "dependencies": ["Core"]
         "files": [
             "HTML/Element.coffee"
+            "HTTP/Cookie.coffee"
         ]
     "Server":
         "command": "build:server"
