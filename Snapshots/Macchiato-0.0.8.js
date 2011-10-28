@@ -170,12 +170,14 @@
         characterCode2 = ((encodedIndex2 & 15) << 4) | (encodedIndex3 >> 2);
         characterCode3 = ((encodedIndex3 & 3) << 6) | encodedIndex4;
         output += String.fromCharCode(characterCode1);
-        if (encodedIndex2 !== 64) {
+        if (characterCode2 !== 64) {
           output += String.fromCharCode(characterCode2);
         }
-        if (encodedIndex3 !== 64) {
+        if (characterCode3 !== 64) {
           output += String.fromCharCode(characterCode3);
         }
+        encodedIndex1 = encodedIndex2 = encodedIndex3 = encodedIndex4 = '';
+        characterCode1 = characterCode2 = characterCode3 = '';
       }
       output = UTF8Utilities.decode(output);
       return output;
