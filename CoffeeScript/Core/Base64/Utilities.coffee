@@ -17,7 +17,7 @@ class Base64Utilities extends MacchiatoClass
     # return  string  The Base64-encoded version of the passed input string.
     @encode: (input) ->
         # UTF-8 encode the passed input string
-        # input = UTF8Utilities.encode input
+        input = UTF8Utilities.encode input
         # Initialize the output string
         output = ""
         # Initialize the current buffer position
@@ -83,8 +83,12 @@ class Base64Utilities extends MacchiatoClass
             output += String.fromCharCode characterCode1
             output += String.fromCharCode characterCode2 if encodedIndex2 isnt 64
             output += String.fromCharCode characterCode3 if encodedIndex3 isnt 64
+            # Erase any left-over character data to prepare for the
+            # next iteration
+            encodedIndex1 = encodedIndex2 = encodedIndex3 = encodedIndex4 = ''
+            characterCode1 = characterCode2 = characterCode3 = ''
         # Convert any UTF-8 character sequences back into a string
-        # output = UTF8Utilities.decode output
+        output = UTF8Utilities.decode output
         # Return the decoded output value
         return output
 
