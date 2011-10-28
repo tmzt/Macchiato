@@ -81,8 +81,8 @@ class Base64Utilities extends MacchiatoClass
             characterCode3 = ((encodedIndex3 & 3) << 6) | encodedIndex4
             # Add the characters to the output string if they are not "="
             output += String.fromCharCode characterCode1
-            output += String.fromCharCode characterCode2 if encodedIndex2 isnt 64
-            output += String.fromCharCode characterCode3 if encodedIndex3 isnt 64
+            output += String.fromCharCode characterCode2 if characterCode2 isnt 64
+            output += String.fromCharCode characterCode3 if characterCode3 isnt 64
             # Erase any left-over character data to prepare for the
             # next iteration
             encodedIndex1 = encodedIndex2 = encodedIndex3 = encodedIndex4 = ''
