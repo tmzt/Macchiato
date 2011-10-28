@@ -37,7 +37,7 @@ class Base64Utilities extends MacchiatoClass
             # 2 bits from the third character
             encodedIndex3 = ((characterCode2 & 15) << 2) | (characterCode3 >> 6)
             # Grab the remaining 6 bits from the third character
-            encodedIndex4 = characterCode3 & 63;
+            encodedIndex4 = characterCode3 & 63
             # If the second character code is not a number
             if isNaN characterCode2
                 # The third and fourth encoded indexes should point at the "="
