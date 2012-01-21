@@ -1,8 +1,8 @@
 # Macchiato #
 
-Macchiato is a toolkit for building complex software in JavaScript. It is
-designed for use both in the web browser as well as on the server, and just so
-happens to be written in [CoffeeScript][homepage-coffeescript].
+Macchiato is a toolkit for building complex object-oriented software in
+JavaScript. It is designed for use both in the web browser as well as on the
+server, and just so happens to be written in [CoffeeScript][homepage-coffeescript].
 
 ## Building the Macchiato Library ##
 
