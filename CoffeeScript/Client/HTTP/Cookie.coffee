@@ -21,8 +21,8 @@ class HTTPCookie extends MacchiatoClass
         @encode = yes
         # Loop over each of the options
         for name, value of options
-            # Invoke the class method by the same name, if one exists, passing
-            # in the option value
+            # Set the option value onto this class instance if it matches one
+            # of the following names
             @[name] = value if name.match /^(data|path|domain|expiration|secure|encode)$/
         # Attempt to load the cookie value
         @load()
