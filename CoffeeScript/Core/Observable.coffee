@@ -8,26 +8,49 @@ class Observable extends MacchiatoClass
 
     # Creates the class variable to store the observers.
     constructor: ->
+        # Define an integer variable which we can increment to create unique
+        # identifiers for observers
+        @identifierIndex = 0
         # Create a place for the observer functions to go
-        @observers = []
+        @observers = {}
         # Indicates if the notify observers method has ever been invoked
         @notifyObserversInvoked = no
 
     # Adds a single Observer function to the list of observers.
     #
     # param   function  observer  A reference to the observer function to add.
-    # return  object              A reference to this class instance.
+    # return  int                 A unique identifier so that the observer can
+    #                             be removed later.
     addObserver: (observer) ->
-        # Add the observer function to the universal channel
-        @observers.push observer
-        # Return a reference to this class instance
-        return @
+        # Increment the unique identifier integer
+        @identifierIndex++
+        # Add the observer function using its unique identifier as the key
+        @observers[@identifierIndex] = observer
+        # Return the unique identifier of the observer
+        return @identifierIndex
 
     # Simple alias for addObserver.
     subscribe: (observer) ->
         # Return the result of the addObserver method, passing the same
         # argument value
         return @addObserver observer
+
+    # Removes a specific observer function using the passed unique identifier.
+    #
+    # param   int     identifier  The unique identifier of the observer
+    #                             to remove.
+    # return  object              A reference to this class instance.
+    removeObserver: (index) ->
+        # Remove the observer
+        delete @observers[index]
+        # Return a reference to this class instance
+        return @
+
+    # Simple alias for removeObserver.
+    unsubscribe: (index) ->
+        # Return the result of the removeObserver method, passing the same
+        # argument value
+        return @removeObserver index
 
     # Issues an event to all of the observer functions in the observers
     # collection on this class instance.
