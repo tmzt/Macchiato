@@ -8,7 +8,10 @@ class HTTPCookie extends MacchiatoClass
     # Calls the parent constructor, and then attempts to load the
     # cookie data.
     #
-    # param  string  name  The name of the cookie to retrieve/create.
+    # param  string  name     The name of the cookie to retrieve/create.
+    # param  object  options  A key/value pair set of objects with keys that
+    #                         match one of the following names: data, path,
+    #                         domain, expiration, secure, encode.
     constructor: (@name = 'default', options = {}) ->
         # Invoke the parent constructor
         super()
