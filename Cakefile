@@ -22,7 +22,7 @@ class CoffeeScriptProject extends PublishSubscribe
 
 # Define a new instance of the CoffeeScriptProject class, passing in the
 # project settings object
-project = new CoffeeScriptProject settings
+project = new CoffeeScriptProject projectSettings
 
 # Find every file in the project
 fs.readdir project.source, (err, files) ->
