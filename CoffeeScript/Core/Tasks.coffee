@@ -5,9 +5,14 @@ class Tasks extends MacchiatoClass
     # Initialize the instance variables and add any task functions that were
     # passed into the tasks array.
     #
-    # param  array  tasks  optional  Adds functions in this array to the task
-    #                                queue. Defaults to an empty array.
-    constructor: (tasks = []) ->
+    # param  array   tasks     optional  Adds functions in this array to
+    #                                    the task queue. Defaults to an
+    #                                    empty array.
+    # param  string  taskType  optional  The type of task management class
+    #                                    to create for each passed task
+    #                                    function. Choices are "task" and
+    #                                    "delayedtask". Defaults to "task".
+    constructor: (tasks = [], @taskType = "task") ->
         # Set everything to an initial state
         @reset()
         # Add each function in the passed tasks array
@@ -30,8 +35,13 @@ class Tasks extends MacchiatoClass
     #                                 task queue.
     # return  object                  A reference to this class instance.
     add: (taskFunction) ->
-        # Adds a task to the task queue
-        @taskQueue.push new Task taskFunction, @
+        # If the task type is "task"
+        if @taskType is "task"
+            # Adds a new Task to the task queue
+            @taskQueue.push new Task taskFunction, @
+        else if @taskType is "delayedtask"
+            # Adds a new DelayedTask to the task queue
+            @taskQueue.push new DelayedTask taskFunction, @
         # Return a reference to this class instance
         return @
 
