@@ -9,13 +9,102 @@ options =
     destination: "Compiled"
 
 # Represents a single CoffeeScript source code file.
-class CoffeeScriptFile extends PublishSubscribe
+class CoffeeScriptSourceFile extends PublishSubscribe
 
     # Defines the named topic channels this class is able to publish
     # notifications on, and sts up the passed configuration settings
     # on this class instance.
     #
-    # param  string  filename  The filename managed by this class.
+    # param  string  filename  The source code filename managed by this class.
+    constructor: (@filename) ->
+        # Define the named topic channels this class can publish
+        super "complete", "exception"
+        # Holds the file data
+        @data = null
+        # Holds a list of class names defined in this file
+        @classes = []
+        # Holds a list of class name dependencies required by this file
+        @dependencies = []
+
+    # Attempts to search for class definitions in the file.
+    #
+    # return  object  A reference to this class instance so we can do
+    #                 method chaining.
+    search: ->
+        # Execute the following tasks in order
+        Tasks.runTasks [
+            @taskLoad
+            @taskRemoveComments
+            @taskFindClasses
+            @taskComplete
+        ]
+        # Return a reference to this class instance
+        return @
+
+    # Attempts to load the configured filename.
+    #
+    # param   object  A reference to the tasks object.
+    # return  null
+    taskLoad: (tasks) =>
+        # Grab a reference to the node file system object
+        fs = require "fs"
+        # Attempt to load the file content
+        fs.readFile @filename, "utf8", (err, data) =>
+            # Throw the error if one happened
+            throw err if err
+            # Place the loaded file data into the data instance variable
+            @data = data
+            # Move on to the next task
+            tasks.next()
+
+    # Attempts to remove code comments from the loaded file data.
+    #
+    # param   object  A reference to the tasks object.
+    # return  null
+    taskRemoveComments: (tasks) =>
+        # Split the file data into individual lines of code
+        lines = @data.split "\n"
+        # Loop over each of the code lines
+        for line, index in lines
+            # Attempt to find the starting position of a code comment
+            commentIndex = line.indexOf "#"
+            # If this line does not appear to have a code comment in it, move
+            # on to the next line
+            continue if commentIndex is -1
+            # Remove the code comment from this line
+            cleanLine = line.substr 0, commentIndex
+            # If the line is null
+            if cleanLine is null
+                # Just write an empty string for this line
+                lines[index] = ""
+            else
+                # Replace the current line of code with the clean line
+                lines[index] = cleanLine
+        # Re-join the lines together
+        @data = lines.join "\n"
+        # Move on to the next task
+        tasks.next()
+
+    # Attempt to find all of the class declarations in the loaded file.
+    #
+    # param   object  A reference to the tasks object.
+    # return  null
+    taskFindClasses: (tasks) =>
+        # Attempt to find things that look like class definitions in the
+        # file data
+        matches = /class +([A-Za-z0-9_]*)/g.exec @data
+        # If we have a class name match, add it to the classes array
+        @classes.push matches[1] if matches[1]?
+        # Move on to the next task
+        tasks.next()
+
+    # Completes the search and issues a notification.
+    #
+    # param   object  A reference to the tasks object.
+    # return  null
+    taskComplete: (tasks) =>
+        # Issue a notification on the "complete" channel
+        @notifyObservers "complete"
 
 # Abstraction for working with a single directory with CoffeeScript source
 # code in it.
@@ -60,6 +149,8 @@ class CoffeeScriptDirectory extends PublishSubscribe
                 # Find every file and directory under the current directory
                 # represented by this class instance
                 fs.readdir @directory, (err, items) ->
+                    # Throw the error if one happened
+                    throw err if err
                     # Forward the array of items to the next task
                     control.next items
             (control, items) =>
@@ -68,9 +159,10 @@ class CoffeeScriptDirectory extends PublishSubscribe
                 return control.next() if items.length is 0
                 # Remove the top item from the list of items in this directory
                 item = @directory + '/' + items.shift()
-                console.log item
                 # Attempt to get the stats about this item
                 fs.stat item, (err, stats) =>
+                    # Throw the error if one happened
+                    throw err if err
                     # If this is a file
                     if stats.isFile()
                         # Notify any observers that we found a file
@@ -129,7 +221,24 @@ class CoffeeScriptProject extends PublishSubscribe
             @[name] = value if name.match /^(name|url|source|destination)$/
 
     # Starts the build process.
+    #
+    # return  object  A reference to this class instance so we can do
+    #                 method chaining.
     build: ->
+        # Execute the following tasks in order
+        Tasks.runTasks [
+            @taskScan
+            @taskFindClasses
+            @taskComplete
+        ]
+        # Return a reference to this class instance
+        return @
+
+    # Starts the scan of the project directory.
+    #
+    # param   object  A reference to the tasks object.
+    # return  null
+    taskScan: (tasks) =>
         # Define a new instance of the CoffeeScriptDirectory class configured
         # to search for all of the CoffeeScript code files in this projects
         # source code directory
@@ -140,9 +249,32 @@ class CoffeeScriptProject extends PublishSubscribe
             for file in files
                 # Create a new instance of the CoffeeScriptFile class and add
                 # it to the local files collection
-                @files.push new CoffeeScriptFile file
+                @files.push new CoffeeScriptSourceFile file
+            # Move on to the next task
+            tasks.next()
         # Start a recursive search
         directory.search yes
+
+    # Attempts to find all of the classes definitions in each of the project
+    # source code files.
+    #
+    # param   object  A reference to the tasks object.
+    # param   int     The current index in the files array.
+    # return  null
+    taskFindClasses: (tasks, index = 0) =>
+        # Move on to the next task if we have reached the last file
+        tasks.next() if index is @files.length
+        # Grab a reference to the current file
+        file = @files[index]
+        # Add an observer to listen for the "complete" notification
+        file.addObserver "complete", ->
+            # Move on to the next file
+            tasks.run index + 1
+        # Search the file for class definitions
+        file.search()
+
+    taskComplete: ->
+        console.log "hi"
 
 # Define a new instance of the CoffeeScriptProject class, passing in the
 # project options object that was defined at the top of this file
