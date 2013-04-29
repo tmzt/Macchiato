@@ -6,7 +6,7 @@ fs = require "fs"
 echo = console.log
 exit = process.exit
 
-# Define the different packages and their dependencies
+# Define the different pkgs and their dependencies
 files =
     "All":
         "command": "build"
@@ -147,44 +147,44 @@ inArray = (haystack, needle) ->
 
 # Generates an array of files to concatenate based on the rules defined in the
 # files object
-getFiles = (packageName, loadedPackages = []) ->
+getFiles = (pkgName, loadedPackages = []) ->
     # Define the file list array we will be returning back
     fileList = []
-    # Return if the package that we were asked to process is already loaded
-    return fileList if inArray loadedPackages, packageName
-    # Add this package to the list of loaded packages
-    loadedPackages.push packageName
-    # Grab a shortcut variable to the current package
-    package = files[packageName]
-    # If a dependencies array is defined on this package
-    if package.dependencies?
+    # Return if the pkg that we were asked to process is already loaded
+    return fileList if inArray loadedPackages, pkgName
+    # Add this pkg to the list of loaded pkgs
+    loadedPackages.push pkgName
+    # Grab a shortcut variable to the current pkg
+    pkg = files[pkgName]
+    # If a dependencies array is defined on this pkg
+    if pkg.dependencies?
         # Loop over each of the dependencies
-        for dependency in package.dependencies
+        for dependency in pkg.dependencies
             # Grab the files from the current dependency
             dependencyFiles = getFiles dependency, loadedPackages
-            # Add the files from the other packages to this file list
+            # Add the files from the other pkgs to this file list
             fileList = fileList.concat dependencyFiles
-    # If a files array is defined on this package
-    if package.files?
+    # If a files array is defined on this pkg
+    if pkg.files?
         # Loop over the files in this collection
-        for file in package.files
-            # Add this file with the package name as the parent directory
-            fileList.push "#{packageName}/#{file}"
-    # State that we were processing the file list for this package
-    echo "Processing #{packageName}."
+        for file in pkg.files
+            # Add this file with the pkg name as the parent directory
+            fileList.push "#{pkgName}/#{file}"
+    # State that we were processing the file list for this pkg
+    echo "Processing #{pkgName}."
     # Return the file list
     return fileList
 
-# Builds everything for a specific package
-build = (packageName) ->
-    # Grab a shortcut variable to the current package
-    package = files[packageName]
-    # Grab the file list for this package
-    fileList = getFiles packageName
+# Builds everything for a specific pkg
+build = (pkgName) ->
+    # Grab a shortcut variable to the current pkg
+    pkg = files[pkgName]
+    # Grab the file list for this pkg
+    fileList = getFiles pkgName
     # Create a place to store all of the file data
     data = []
     # State that we are reading all of the files
-    echo "Reading all files included in #{packageName}."
+    echo "Reading all files included in #{pkgName}."
     # Loop over each of the files in the file list and push the contents of the
     # file into the data array
     data.push read "CoffeeScript/#{file}" for file in fileList
@@ -196,34 +196,34 @@ build = (packageName) ->
     # Define a place to store any data to prepend, and start it out with a
     # commented copy of the LICENSE file
     prependData = [comment read "LICENSE"]
-    # If we have any data in the prepend member of this package
-    if package.prepend?
+    # If we have any data in the prepend member of this pkg
+    if pkg.prepend?
         # Read each file to prepend into the prepend data array
-        prependData.push read file for file in package.prepend
+        prependData.push read file for file in pkg.prepend
     # Write the prepend data
     write "Compiled/#{libraryName}.js", prependData.join "\n\n"
     # Determine what the CoffeeScript compile command needs to be
     command = "coffee -pc Compiled/#{libraryName}.coffee >> Compiled/#{libraryName}.js"
     # State that we are compiling the CoffeeScript file
-    echo "Compiling #{packageName}."
+    echo "Compiling #{pkgName}."
     # Execute the CoffeeScript compiler on the temporary file
     exec command, (err, stdout, stderr) ->
         # Handle the error if we have one
         handleError err if err
         # If we should run the compiled JavaScript file
-        if package.run? and package.run
+        if pkg.run? and pkg.run
             # State that we are running the compiled library code under Node.js
-            echo "Running #{packageName} under Node.js."
+            echo "Running #{pkgName} under Node.js."
             # Run it under Node.js
             exec "node Compiled/#{libraryName}.js", (err, stdout, stderr) ->
                 # Display stdout if there is any output to display
                 echo stdout if stdout isnt ""
         # If we should attempt to minimize the compiled JavaScript file
-        if package.minimize? and package.minimize
+        if pkg.minimize? and pkg.minimize
             # Determine the command to minimize the JavaScript file
             command = "cat Compiled/#{libraryName}.js | jsmin > Compiled/#{libraryName}.min.js"
-            # State that we are attempting to minimize the package with jsmin
-            echo "Minimizing #{packageName} with jsmin."
+            # State that we are attempting to minimize the pkg with jsmin
+            echo "Minimizing #{pkgName} with jsmin."
             # Attempt to use jsmin to minimize the JavaScript
             exec command, (err, stdout, stderr) ->
                 # Display stdout if there is any output to display
@@ -231,13 +231,13 @@ build = (packageName) ->
 
 # Loop over the files object and define the tasks this Cakefile exposes
 for name, rules of files
-    # Move on to the next package definition if this package is supposed to be
+    # Move on to the next pkg definition if this pkg is supposed to be
     # private
     continue if rules.private? and rules.private
     # Define the task to run these rules
-    task rules.command, rules.description, ((packageName) ->
-        # Return a function that attempts to build this package
-        return -> build packageName
+    task rules.command, rules.description, ((pkgName) ->
+        # Return a function that attempts to build this pkg
+        return -> build pkgName
     )(name)
 
 # Define the task that resets everything
